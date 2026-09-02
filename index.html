@@ -191,6 +191,17 @@
   .f-acts{display:flex;flex-direction:column;gap:4px;flex:0 0 auto}
   .f-acts .btn{font-size:10px;padding:2px 8px}
   .ai-ts{font-size:10px;color:var(--tx3);margin-top:4px;font-style:italic}
+
+  /* ===== 预计通过时间 ===== */
+  .pred{border:1px dashed #c9b26a;background:#fdf9ee;border-radius:8px;padding:7px 11px;font-size:11.6px;line-height:1.55}
+  .p-lab{display:block;font-size:9.5px;font-weight:800;letter-spacing:.14em;color:var(--gold);margin-bottom:2px}
+  .p-when{color:var(--navy);font-weight:800;font-size:12.2px}
+  .p-conf{display:inline-block;font-size:9.5px;font-weight:800;border-radius:8px;padding:0 7px;margin-left:6px;vertical-align:1px}
+  .p-conf.high{background:#e2f1e5;color:#155e2a;border:1px solid #bcddc4}
+  .p-conf.mid{background:var(--goldbg);color:var(--gold);border:1px solid #dcc98e}
+  .p-conf.low{background:#eef0f3;color:var(--tx3);border:1px solid var(--line2)}
+  .p-basis{margin-top:3px;color:var(--tx2);font-size:11px}
+  .p-basis b{color:var(--tx)}
 </style>
 </head>
 <body>
@@ -249,6 +260,7 @@
         <div class="point" style="font-size:11.8px">经理修正案确认搭载 <b>MATCH、Chip Security、AI OVERWATCH</b>（禁售期改 18 个月）；RASA 与 AI 模型盗窃法案未上车。三法案目前仍非任何一院正式文本。</div>
       </div>
     </div>
+    <div class="pred-ndaa-wrap" style="padding:0 16px 10px" id="pred-ndaa"></div>
     <div class="card-actions" style="padding:0 16px 12px">
       <button class="btn" data-act="fold" data-fold="ndaa-detail" data-closed="🗓 展开捆绑矩阵与立法时间线">🗓 展开捆绑矩阵与立法时间线</button>
       <button class="btn red" data-act="goto-news" data-key="ndaa">📰 看 NDAA 近两月媒体评价与 AI 快评 →</button>
@@ -511,6 +523,38 @@ window.TRACKER={stamp:"2026-09-02",feed:[
   {id:"f13",ts:"2026-07-15 06:00",type:"voice",key:"chip",title:"ARI：Chip Security Act 等三法案进入参院 NDAA 经理修正案，将强化对华 AI 芯片出口管控",src:["ARI","https://ari.us/?p=3984/"]},
   {id:"f14",ts:"2026-07-14 22:00",type:"voice",key:"overwatch",title:"Punchbowl：AI OVERWATCH 捆绑版禁售期由 2 年缩至 18 个月，科技业游说仍在继续",src:["Punchbowl News","https://www.banks.senate.gov/news/in-the-news/tech-chips-bills-poised-for-ndaa-ride/"]},
 ]};
+
+/* ===== 预计通过时间（研究性预测：历史案例+当前流程推演，非事实声明） ===== */
+const PRED={
+ ndaa:{when:"2026-11~12 跛脚鸭期成法概率较高；极端情形跨财年（2027-01 后）以追溯文本落地",conf:"high",
+   basis:"历史基准：NDAA 自1961财年以来连续60+年每年成法，平均在财年开启后约45天签署，且 FY2021 曾有跨年(2021-01-01)签署先例；当前仅剩“伊朗战争/开支”程序僵局，属可谈判分歧而非结构性否决。"},
+ match:{when:"捆绑随 NDAA → 2026-12（概率中）；若会前被删 → 本届难成法，2027 新国会重提",conf:"mid",
+   basis:"历史类比：出口管制条款最快的通道是 NDAA 搭车（芯片护栏、ECRA 强化等先例）；不利面：众院文本滞留日程 130+ 天无全院排期、参院银行委员会无听证——单独立法通道已基本堵塞。"},
+ chip:{when:"NDAA 通道 → 2026-12（概率中高）；被删则有小概率在跛脚鸭期单独过众院，参院仍无排期",conf:"mid",
+   basis:"42-0 全票 + 41 人联署表明两院共识极强，但历史上此类“强制合规型”芯片条款几乎都靠年度防御法案落地；SA 6683 已占好 NDAA 第 X 编位置，会前删改风险与 MATCH 同源。"},
+ overwatch:{when:"随 NDAA 捆绑 → 2026-12（条件概率高：NDAA 若落地则随包概率大）；被软化仍可能以 18 个月版本过会",conf:"high",
+   basis:"三法案中心件：Banks/Warren 两党领衔 + 国会30日审查机制自带“立法护城河”，众参两版已高度收敛（差异仅剩否决机制取舍）；历史类比：军售式国会审查条款一旦写入 NDAA，会前通常保留而非删除。"},
+ rasa:{when:"本届成法可能性低（&lt;15%）；现实路径 = 2027 新国会随下届 NDAA/捆绑重推落地",conf:"low",
+   basis:"众院 369-22 快速通过证明共识存在，但参院银行委员会 8 个月无动作、且未搭上 7/14 经理修正案；历史类比：云/远程访问类出口规则从 BIS 咨询意见(2009起)到立法酝酿逾十年，执法可操作性拖慢优先级。"},
+ theft:{when:"本届成法概率很低（无参院配套）；预期 2027 新国会重提并获参院配套，2027-2028 年内成法概率中等",conf:"low",
+   basis:"43-0 显示两党将“模型蒸馏盗窃”定性为威胁，但零拨款“意见声明型”立法通常先作信号后实质化；历史类比：PAPA 从 2023 版委员会即亡到 2026 版获双主席背书，跨届升级是常态路径。"},
+ noaa:{when:"本届不会以单行法通过（≈0）；内容已由 FY2026 NDAA 第1532/6604条及行政禁令吸收替代",conf:"low",
+   basis:"单行法空转 14 个月+目标已被先行落地，新闻与政治驱动力消失；若再回归，多半作为下届 NDAA 涉华 AI 条款的整合语言，而非独立法案。"},
+ oss:{when:"本届通过概率≈0（8月底才提出）；预期 2027 新国会重提并推进，若获参院配套或随 AI/商务一揽子立法，窗口在 2027-2028",conf:"low",
+   basis:"距本届结束不足4个月，且仅到 E&C 小组委员会；历史类比：产业政策型法案通常当届“标记”、下届“成法”（参考《芯片法案》2021 提出→2022 签署的两届轨迹）。"},
+ papa:{when:"本届成法概率低（&lt;20%）：司法委员会未排听证且 TRIPS 冲突明显；更可能随届死亡，2027 重提",conf:"low",
+   basis:"2023 版 H.R.5475 在委员会即亡是直接先例；穆勒纳尔/伊萨背书提升的是议程地位而非成法率；历史类比：涉专利主权/国民待遇的立法鲜有快速通过记录，若落地更多靠 USPTO 行政规则“曲线变现”。"},
+ fapd:{when:"本届几乎不可能（0 联署、无听证）；若下届与 PAPA 捆绑重推，窗口在 2027-2028",conf:"low",
+   basis:"0 联署+外部模型估通过率约 10.8%；作为 PAPA 的“影子/取证前置”法案通常不单独成法，只随主案推进。"}
+};
+function confTag(c){return {high:'高',mid:'中',low:'低'}[c]||c;}
+function predHTML(key){
+  var p=PRED[key]; if(!p) return '';
+  return '<div class="pred"><span class="p-lab">🔮 预计通过时间（研究性预测）</span>'
+    +'<span class="p-when">'+p.when+'</span><span class="p-conf '+p.conf+'">置信度 '+confTag(p.conf)+'</span>'
+    +'<div class="p-basis">'+p.basis+'</div></div>';
+}
+
 const HSTEPS=["提出","委员会","众院全院","参院","总统签署"];
 const SSTEPS=["提出","委员会","参院全院","众院","总统签署"];
 function flowBar(key,ch){
@@ -542,6 +586,7 @@ function ovCard(b){
       <div><div class="blk-label">法案要点</div><div class="point">${b.point}</div></div>
       <div><div class="blk-label">两院状态 · 立法流程</div>${ch}${flowWrap(b.key)}</div>
       <div><div class="blk-label">最新进展</div><div class="latest ${b.latestCls}">${b.latest}</div></div>
+      <div>${predHTML(b.key)}</div>
     </div>
     <div class="card-actions">
       <button class="btn" data-act="fold" data-fold="tl-${b.key}">🗓 立法节点</button>
@@ -607,6 +652,7 @@ document.addEventListener("click",e=>{
     if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),90);
   }
 });
+document.getElementById('pred-ndaa').innerHTML=predHTML('ndaa');
 renderOverview(); renderNews(); renderFeed();
 </script>
 </body>
