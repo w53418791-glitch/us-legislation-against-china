@@ -169,6 +169,28 @@
   .refs a:hover{color:var(--navy2)}
   .footer{margin-top:34px;border-top:2px solid var(--navy);padding-top:12px;font-size:11px;color:var(--tx3)}
   .seal{display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-weight:800;font-size:12px;letter-spacing:.05em}
+
+  /* ===== 最新动向视图 / 互通元素 ===== */
+  .feed-badge{display:inline-block;background:var(--red);color:#fff;font-size:9.5px;font-weight:800;border-radius:9px;padding:0 6px;margin-left:4px;vertical-align:1px}
+  .n-live{border:1px solid #d5e0f2;border-radius:8px;margin:10px 16px 0;padding:6px 12px 0;background:#f6f9ff}
+  .n-live .h{font-size:10.5px;font-weight:800;color:var(--navy2);letter-spacing:.07em;margin:4px 0 2px}
+  .n-live ul{list-style:none}
+  .n-live li{font-size:12px;color:var(--tx2);padding:3px 0;border-bottom:1px dashed var(--line)}
+  .n-live li:last-child{border-bottom:none}
+  .n-live li b{color:var(--navy2)}
+  .n-live .who{display:block;font-size:10px;color:var(--tx3)}
+  .f-item{display:flex;gap:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:7px 0;align-items:center;box-shadow:0 1px 2px rgba(60,50,20,.05)}
+  .f-main{flex:1;min-width:0}
+  .f-line1{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:10.5px}
+  .f-n{font-family:ui-monospace,Consolas,monospace;color:var(--tx3);font-weight:700;white-space:nowrap}
+  .f-type{font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:3px;letter-spacing:.05em}
+  .f-type.law{background:var(--navy);color:#fff}
+  .f-type.voice{background:var(--red);color:#fff}
+  .f-title{font-size:13px;color:var(--tx);margin-top:2px;text-align:justify}
+  .f-src{font-size:10.5px;color:var(--tx3);margin-top:1px}
+  .f-acts{display:flex;flex-direction:column;gap:4px;flex:0 0 auto}
+  .f-acts .btn{font-size:10px;padding:2px 8px}
+  .ai-ts{font-size:10px;color:var(--tx3);margin-top:4px;font-style:italic}
 </style>
 </head>
 <body>
@@ -182,6 +204,7 @@
 
 <nav class="nav" id="nav">
   <button class="tab active" data-view="overview">📜 总览<small>要点 · 编号 · 两院状态 · 最新进展</small></button>
+  <button class="tab" data-view="feed">🕒 最新动向<small>立法动向 · 外界评价 · 最多20条</small></button>
   <button class="tab" data-view="news">📰 媒体评价与 AI 快评<small>近两个月外部声音</small></button>
 </nav>
 
@@ -269,6 +292,15 @@
 
   <div class="sec">📜 九部法案总览 <small>竖卡多列排布，一行并排 3 部；卡内自上而下：编号→要点→两院状态→最新进展</small></div>
   <div class="billgrid" id="bill-list"></div>
+</section>
+
+<section class="view" id="view-feed">
+  <div class="sec">🕒 最新动向 <small>本页看“动态”（自动检索流水）；总览页看“截面”（各法案流程快照）</small></div>
+  <div class="note" id="feed-meta" style="margin-top:0"></div>
+  <div class="sec" style="font-size:14.5px;color:#8a2020;border-bottom-color:var(--red);margin:18px 0 6px">▍ 立法动向 <small>congress.gov / federalregister.gov 等官方动作 · 同步回流进对应法案卡的“立法节点”</small></div>
+  <div id="feed-law"></div>
+  <div class="sec" style="font-size:14.5px;border-bottom-color:var(--navy);margin:18px 0 6px">▍ 外界评价 <small>中外主流媒体（路透/彭博/卫报/CNN/BBC/联合早报 与 环球时报/观察者网/凤凰卫视 等）及“出口管制合规研究”“合规视点”公众号观点 · 仅限 1+9 法案</small></div>
+  <div id="feed-voice"></div>
 </section>
 
 <section class="view" id="view-news">
@@ -417,8 +449,68 @@ const DATA = {
 
 const NDAA_LABEL = {in:'🎖 已入参院 NDAA 经理修正案',ask:'⚠ 仅捆绑倡议（未上车）',no:'与 NDAA 无捆绑关系'};
 
+/* ===== 最新动向视图：helpers（feed 数据见下方 window.TRACKER.feed，仅保留最新20条） ===== */
+const FEED_MAX=20;
+const FEED_NAME={ndaa:"NDAA'27",match:"MATCH",chip:"CHIP安全",overwatch:"AI OVERWATCH",rasa:"RASA",theft:"AI模型盗窃",noaa:"禁对抗性AI",oss:"开源AI",papa:"禁敌对专利",fapd:"专利披露"};
+function feedAll(){return (window.TRACKER.feed||[]).slice();}
+function feedSort(a){return a.slice().sort(function(x,y){return (x.ts||"").localeCompare(y.ts||"");}).reverse();}
+function feedBadge(key){var n=feedAll().filter(function(f){return f.key===key;}).length;return n?' <span class="feed-badge">🕒'+n+'</span>':'';}
+function billChip(key){
+  if(key==='ndaa'){return '<span class="tag b-ndaa">NDAA</span>';}
+  var b=DATA.bills.filter(function(x){return x.key===key;})[0];
+  var lab=b?(b.tag.split('\u00b7')[0]):(FEED_NAME[key]||key);
+  var cls=b?b.cls:'b-chip';
+  return '<span class="tag '+cls+'">'+lab+'</span>';
+}
+function feedRow(f){
+  var src=f.src||["",""], s2=src[1]||"", s0=src[0]||"";
+  var t=f.type==='law'?'立法动向':'外界评价';
+  return '<div class="f-item '+f.type+'">'
+    +'<div class="f-main">'
+    +'<div class="f-line1"><span class="f-n">'+(f.ts||'')+'</span><span class="f-type '+f.type+'">'+t+'</span>'+billChip(f.key)+'</div>'
+    +'<div class="f-title">'+f.title+'</div>'
+    +'<div class="f-src">'+(s2?'<a href="'+s2+'" target="_blank">'+s0+'</a>':s0)+'</div>'
+    +'</div>'
+    +'<div class="f-acts">'
+    +'<button class="btn" data-act="goto-ov" data-key="'+f.key+'">法案卡</button>'
+    +'<button class="btn red" data-act="goto-news" data-key="'+f.key+'">媒体·快评</button>'
+    +'</div></div>';
+}
+function renderFeed(){
+  var arr=feedSort(feedAll()).slice(0,FEED_MAX);
+  var law=arr.filter(function(x){return x.type==='law';});
+  var voice=arr.filter(function(x){return x.type==='voice';});
+  document.getElementById('feed-law').innerHTML=law.length?law.map(feedRow).join(''):'<div class="none-voice">暂无新立法动向。</div>';
+  document.getElementById('feed-voice').innerHTML=voice.length?voice.map(feedRow).join(''):'<div class="none-voice">暂无新外界评价。</div>';
+  document.getElementById('feed-meta').textContent='自动检索流水 · 当前 '+arr.length+'/20 条（立法动向 '+law.length+' · 外界评价 '+voice.length+'）· 每日 06:00 更新 · 数据截至 '+window.TRACKER.stamp;
+}
+function liveStrip(key){
+  var arr=feedSort(feedAll()).filter(function(f){return f.key===key;}).slice(0,4);
+  if(!arr.length) return '';
+  var rows=arr.map(function(f){return '<li class="live-li"><b>'+((f.type==='law')?'立法':'评价')+'</b>：'+f.title+'<span class="who">'+(f.ts?f.ts.slice(5):'')+' · '+((f.src&&f.src[0])||'')+'</span></li>';}).join('');
+  return '<div class="n-live"><div class="h">◈ 最新动向（已并入快评上下文）</div><ul>'+rows+'</ul>'
+    +'<div class="card-actions" style="padding:0 0 6px"><button class="btn" data-act="feed">查看全部动向 →</button></div></div>';
+}
+
+
 /* 五步流程当前阶段：[众议院idx, 参议院idx]，-1=该院暂无版本/未启动 */
 const FLOW = {match:[2,1],chip:[2,1],overwatch:[2,1],rasa:[3,1],theft:[2,-1],noaa:[1,1],oss:[1,-1],papa:[1,-1],fapd:[1,-1]};
+window.TRACKER={stamp:"2026-09-02",feed:[
+  {id:"f01",ts:"2026-07-22 16:38",type:"law",key:"ndaa",title:"众议院以 216-212 通过 FY2027 NDAA（H.R.8800），文本移交参院",src:["Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/8800/all-info"]},
+  {id:"f02",ts:"2026-07-14 22:41",type:"law",key:"ndaa",title:"参院 NDAA 经理修正案确认捆绑 MATCH / Chip Security / AI OVERWATCH（Punchbowl 披露）；AI OVERWATCH 对华禁售期缩为 18 个月",src:["Punchbowl News","https://www.banks.senate.gov/news/in-the-news/tech-chips-bills-poised-for-ndaa-ride/"]},
+  {id:"f03",ts:"2026-07-14 22:41",type:"law",key:"ndaa",title:"参院程序表决失败：cloture 50-46，FY2027 NDAA 未能进入正式辩论",src:["U.S. Senate","https://www.congress.gov/bill/119th-congress/senate-bill/4784"]},
+  {id:"f04",ts:"2026-07-14 22:41",type:"law",key:"chip",title:"Cotton 提交 SA 6683：将 Chip Security Act 作为 S.4784 第 X 编 Subtitle H 附加",src:["国会记录","https://congress.wiki/daily-record/2026-07-14/section/crec-2026-07-14-pt1-pgs3953-4"]},
+  {id:"f05",ts:"2026-07-14 22:41",type:"law",key:"match",title:"MATCH 法案（加强版）进入参院 NDAA 经理修正案",src:["ARI","https://ari.us/?p=3984/"]},
+  {id:"f06",ts:"2026-09-01 09:00",type:"law",key:"match",title:"韩政府自 9 月 1 日将高性能 AI 芯片与先进制造设备列入战略物项并收紧出口管制（被解读为对冲美方对齐压力）",src:["韩媒/网易财经","https://www.163.com/dy/article/L5QVUCHK0519D45U.html"]},
+  {id:"f07",ts:"2026-08-04 12:00",type:"law",key:"rasa",title:"参院 S.3519（RASA）联署扩至 6 人：Banks、Slotkin 加入",src:["Congress.gov","https://www.congress.gov/bill/119th-congress/senate-bill/3519/cosponsors?s=1&overview=closed"]},
+  {id:"f08",ts:"2026-09-02 08:00",type:"law",key:"oss",title:"H.R.10152（开源 AI 领导法案）据 The Ledger Asia 报道已通过 E&C 小组委员会审议（congress.gov 尚未更新）",src:["The Ledger Asia","https://theledger.asia/us-open-source-ai-bill-seeks-strategic-edge-over-chinas-model-ecosystem"]},
+  {id:"f09",ts:"2026-08-21 14:13",type:"voice",key:"match",title:"日媒侧：TIMEWELL 刊文称 MATCH 是日本“试金石”——东京电子等对华营收 30-42%，150 天对齐条款=二选一",src:["TIMEWELL","https://timewell.jp/en/columns/semiconductor-export-control-japan-us-2026"]},
+  {id:"f10",ts:"2026-08-06 09:00",type:"voice",key:"ndaa",title:"南华早报：FY2027 NDAA 两院版本均体现对华对抗共识，最关键条款指向先进 AI 芯片/云计算/半导体设备（参考消息转）",src:["SCMP/参考消息","http://hiwars.com/en/intel/the-us-defense-authorization-act-highlights-the-ob"]},
+  {id:"f11",ts:"2026-07-20 10:00",type:"voice",key:"match",title:"荷兰外交部：“原则上强烈反对外国立法的域外适用；荷兰政策不能由外部时间表决定”（IBTimes 采访）",src:["IBTimes","https://www.ibtimes.com/dutch-chipmakers-balancing-act-between-washington-beijing-3806546"]},
+  {id:"f12",ts:"2026-07-07 22:00",type:"voice",key:"match",title:"荷兰外贸大臣率 17 家企业（含 ASML）访华，双方宣布成立中荷商务理事会",src:["IBTimes","https://www.ibtimes.com/dutch-chipmakers-balancing-act-between-washington-beijing-3806546"]},
+  {id:"f13",ts:"2026-07-15 06:00",type:"voice",key:"chip",title:"ARI：Chip Security Act 等三法案进入参院 NDAA 经理修正案，将强化对华 AI 芯片出口管控",src:["ARI","https://ari.us/?p=3984/"]},
+  {id:"f14",ts:"2026-07-14 22:00",type:"voice",key:"overwatch",title:"Punchbowl：AI OVERWATCH 捆绑版禁售期由 2 年缩至 18 个月，科技业游说仍在继续",src:["Punchbowl News","https://www.banks.senate.gov/news/in-the-news/tech-chips-bills-poised-for-ndaa-ride/"]},
+]};
 const HSTEPS=["提出","委员会","众院全院","参院","总统签署"];
 const SSTEPS=["提出","委员会","参院全院","众院","总统签署"];
 function flowBar(key,ch){
@@ -444,7 +536,7 @@ function ovCard(b){
       <span class="ord">${b.no}</span><span class="zh">${b.zh}</span>${b.focus?` <span class="focus-flag">${b.focus}</span>`:""}
       <div class="en">${b.en}</div>
       <div class="nums">${nums}</div>
-      <div><span class="ribbon ${ribbonCls}">${NDAA_LABEL[b.ndaa]}</span></div>
+      <div><span class="ribbon ${ribbonCls}">${NDAA_LABEL[b.ndaa]}</span>${feedBadge(b.key)}</div>
     </div>
     <div class="card-body">
       <div><div class="blk-label">法案要点</div><div class="point">${b.point}</div></div>
@@ -472,9 +564,10 @@ function nBlock(o){
   return `
   <div class="n-card" id="${id}">
     <div class="n-head"><span class="zh">${o.zh}</span><span class="id">${o.en}</span></div>
+    ${liveStrip(o.key)}
     <div class="media-box"><div class="h">◈ 媒体评价（近两个月 · 2026-07-02 ~ 09-02）</div>
       <ul>${media||`<li class="none-voice">近两个月暂无明显声音。</li>`}</ul></div>
-    <div class="ai-box"><div class="h">⟡ AI 快评</div><p>${o.ai}</p></div>
+    <div class="ai-box"><div class="h">⟡ AI 快评</div><p>${o.ai}</p>${o.aiTs?'<div class="ai-ts">▲ 快评最近更新于 ' + o.aiTs + '</div>':''}</div>
     <div class="refs"><b>信源：</b>${refs}</div>
     <div class="card-actions" style="padding:0 16px 12px"><button class="btn" data-act="goto-ov" data-key="${o.key}">← 回总览</button></div>
   </div>`;
@@ -505,6 +598,8 @@ document.addEventListener("click",e=>{
     switchView("news");
     const el=document.getElementById("news-"+g.dataset.key);
     if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),90);
+  }else if(act==="feed"){
+    switchView("feed");
   }else if(act==="goto-ov"){
     switchView("overview");
     const key=g.dataset.key==='ndaa'?'ndaa-top':'ov-'+g.dataset.key;
@@ -512,7 +607,7 @@ document.addEventListener("click",e=>{
     if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),90);
   }
 });
-renderOverview(); renderNews();
+renderOverview(); renderNews(); renderFeed();
 </script>
 </body>
 </html>
