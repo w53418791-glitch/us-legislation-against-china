@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美国涉华技术立法跟踪台 · 国会配色竖卡版</title>
+<style>
+  /* ===== 美式国会官方配色：羊皮纸 + 老荣耀蓝 + 美国红 + 国会金 ===== */
+  :root{
+    --bg:#efe9db;            /* 羊皮纸底色 */
+    --paper:#f8f5ec;         /* 面板纸色 */
+    --card:#ffffff;
+    --card2:#f1eef7;
+    --line:#d8d0bd;
+    --line2:#b9b0a0;
+    --navy:#0A3161;          /* Old Glory Blue */
+    --navy2:#13427e;
+    --red:#B31942;           /* American Red */
+    --gold:#8a6a1d;          /* 国会金（深，保证对比度） */
+    --goldbg:#faf3df;
+    --tx:#1c2128;
+    --tx2:#464d57;
+    --tx3:#7c838d;
+    --green:#1a7a34;
+    --blueink:#1f4e97;
+    --amber:#a06a00;
+    --shadow:0 1px 3px rgba(60,50,20,.08),0 4px 14px rgba(60,50,20,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC","Helvetica Neue",Arial,sans-serif;line-height:1.75;font-size:15px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body::before{content:"";position:fixed;inset:0;background:radial-gradient(1200px 600px at 15% -10%,rgba(10,49,97,.05),transparent 60%),radial-gradient(900px 500px at 100% 0,rgba(179,25,66,.04),transparent 55%);pointer-events:none;z-index:0}
+  .wrap{max-width:1260px;margin:0 auto;padding:20px 18px 80px;position:relative;z-index:1}
+  a{color:var(--navy2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---- header：Capitol 蓝 ---- */
+  header.top{background:linear-gradient(135deg,#082a55 0%,#0A3161 55%,#13427e 100%);color:#fdf9ee;border-radius:12px 12px 0 0;border:1px solid var(--navy);padding:20px 22px 16px;box-shadow:var(--shadow)}
+  .kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c9d6ec;font-family:inherit}
+  h1{font-size:24px;font-weight:800;color:#ffffff;margin:3px 0 6px;letter-spacing:.4px}
+  h1 .hl{color:#e9c15c}
+  .meta-line{font-size:11.5px;color:#cdd9ee;line-height:1.7}
+  .meta-line b{color:#fff}
+
+  /* ---- nav ---- */
+  .nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border:1px solid var(--line2);border-top:none;border-radius:0 0 10px 10px;padding:6px;display:flex;gap:6px;box-shadow:0 2px 8px rgba(60,50,20,.08)}
+  .nav .tab{flex:1;min-width:150px;border:1px solid transparent;background:transparent;color:var(--tx2);font-size:13px;font-weight:800;padding:7px 10px;border-radius:7px;cursor:pointer;transition:.15s;text-align:center;font-family:inherit}
+  .nav .tab small{display:block;font-weight:400;font-size:10.5px;color:var(--tx3);margin-top:1px}
+  .nav .tab:hover{color:var(--navy)}
+  .nav .tab.active{background:var(--navy);color:#fff;box-shadow:inset 0 -2px 0 #e9c15c}
+  .nav .tab.active small{color:#d6e0f0}
+
+  .view{display:none}
+  .view.active{display:block;animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px;font-size:11px;color:var(--tx2)}
+  .legend .item{display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:2px 10px;box-shadow:0 1px 2px rgba(60,50,20,.05)}
+  .legend .dot{width:8px;height:8px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+  .sec{font-size:16px;font-weight:800;color:var(--navy);margin:20px 0 10px;display:flex;align-items:baseline;gap:8px;border-bottom:2px solid var(--navy);padding-bottom:6px}
+  .sec small{font-weight:400;color:var(--tx3);font-size:11px}
+
+  /* ===== 总览：竖卡多列网格（一行多部法案） ===== */
+  .billgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+  @media(max-width:1160px){.billgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:760px){.billgrid{grid-template-columns:1fr}}
+
+  .card{background:var(--card);border:1px solid var(--line2);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;height:fit-content}
+  .card-top{border-bottom:3px double var(--line2);background:linear-gradient(180deg,var(--card2),#fff);padding:10px 14px 9px}
+  .ord{display:inline-block;min-width:20px;text-align:center;font-size:12px;font-weight:800;color:#fff;background:var(--navy);border-radius:5px;padding:0 5px;margin-right:6px;font-style:normal}
+  .zh{font-size:14.6px;font-weight:800;line-height:1.4;color:var(--navy)}
+  .focus-flag{font-size:10.5px;color:var(--red);font-weight:800}
+  .en{font-size:10.5px;color:var(--tx3);font-style:italic;margin:1px 0 7px}
+  .nums{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+  .num{font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:11px;background:#f0f3f9;border:1px solid #c8d3e5;color:var(--navy2);padding:1px 7px;border-radius:4px;white-space:nowrap}
+  .num b{font-weight:800}
+  .num.green{border-color:#a9cfae;background:#eef8ef;color:#17602c}
+  .num.red{border-color:#e4b0bc;background:#fdf1f3;color:var(--red)}
+  .num.gold{border-color:#dcc98e;background:var(--goldbg);color:var(--gold)}
+
+  .ribbon{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;padding:1px 9px;border-radius:4px;margin-top:7px;font-family:inherit}
+  .ribbon.in{background:var(--goldbg);color:var(--gold);border:1px solid #d9bd6d}
+  .ribbon.ask{background:#fdf3e2;color:var(--amber);border:1px dashed #dcae55}
+  .ribbon.no{background:#eef0f3;color:var(--tx3);border:1px solid var(--line)}
+
+  .card-body{padding:10px 14px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .blk-label{font-size:9.5px;color:var(--tx3);font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:2px;margin-bottom:4px}
+  .point{font-size:12.8px;color:var(--tx);text-align:justify}
+  .point b{color:var(--navy)}
+  .ch-line{font-size:12.2px;color:var(--tx2);padding:1.5px 0;display:flex;gap:6px}
+  .ch-line .ch-tag{font-weight:800;color:#fff;border-radius:3px;padding:0 6px;font-size:10px;flex:0 0 auto;height:16px;line-height:16px;margin-top:2px}
+  .latest{font-size:12.2px;color:var(--tx);background:#f6f7f9;border-left:3px solid var(--navy2);padding:6px 9px;border-radius:0 6px 6px 0}
+  /* 五步立法流程条：逐次点亮 */
+  .flow-wrap{margin-top:6px}
+  .flow-lbl{font-size:9px;font-weight:800;color:var(--tx3);letter-spacing:.05em;margin:5px 0 2px;display:flex;align-items:center;gap:4px}
+  .flow-lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+  .flow{display:flex;gap:2px}
+  .flow .st{flex:1;text-align:center;font-size:8.8px;font-weight:800;line-height:1;padding:3px 1px;border:1px solid var(--line);border-radius:3px;color:var(--tx3);background:#faf9f4;white-space:nowrap;letter-spacing:0}
+  .flow .st.done{background:#e2f1e5;color:#155e2a;border-color:#bcddc4}
+  .flow .st.on{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 0 0 1px rgba(10,49,97,.18)}
+  .flow .st.off{opacity:.55}
+  .latest b{color:var(--navy2)}
+  .latest.ok{border-left-color:var(--green)} .latest.ok b{color:#13602a}
+  .latest.warn{border-left-color:var(--gold)} .latest.warn b{color:var(--gold)}
+  .latest.stall{border-left-color:var(--tx3)} .latest.stall b{color:var(--tx3)}
+
+  .card-actions{display:flex;gap:6px;padding:0 14px 11px;flex-wrap:wrap}
+  .btn{font-size:11px;font-weight:800;padding:4px 11px;border-radius:6px;cursor:pointer;border:1px solid var(--line2);background:#fff;color:var(--navy);transition:.12s;font-family:inherit}
+  .btn:hover{border-color:var(--navy);background:#f0f4fb}
+  .btn.red:hover{color:var(--red);border-color:var(--red);background:#fdf1f3}
+  .btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  .fold{display:none;border-top:1px solid var(--line);background:#fbfaf6}
+  .fold.open{display:block;animation:fade .18s ease}
+  .fold-inner{padding:10px 16px 12px}
+  .tl{list-style:none}
+  .tl li{position:relative;padding:0 0 7px 18px;border-left:1px solid #cfc7b4;margin-left:5px}
+  .tl li:last-child{border-left-color:transparent;padding-bottom:1px}
+  .tl li::before{content:"";position:absolute;left:-4px;top:4px;width:7px;height:7px;border-radius:50%;background:var(--navy2);border:2px solid #fff;box-shadow:0 0 0 1px var(--line2)}
+  .tl li.hot::before{background:var(--red)}
+  .tl .d{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:var(--navy2);font-weight:700;margin-right:6px;white-space:nowrap}
+  .tl .t{font-size:12.6px;color:var(--tx2)}
+  .tl .t b{color:var(--tx)}
+
+  /* ---- NDAA 特卡 ---- */
+  .ndaa-card{border:1px solid #c9a94f;border-radius:10px;background:linear-gradient(180deg,#fffdf4,#fdf9ec);box-shadow:var(--shadow);margin-bottom:6px;overflow:hidden}
+  .ndaa-card .card-top{background:linear-gradient(135deg,#0A3161,#13427e);border-bottom:none}
+  .ndaa-card .card-top .zh{color:#fff;font-size:16px}
+  .ndaa-card .card-top .en{color:#cdd9ee}
+  .ndaa-card .card-top .num{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff}
+  .ndaa-card .card-top .num b{color:#ffe9b0}
+  .ov-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:12px 16px}
+  @media(max-width:1100px){.ov-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:620px){.ov-grid{grid-template-columns:1fr}}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:800px){.grid2{grid-template-columns:1fr}}
+  .box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px}
+  .box h6{font-size:11.5px;letter-spacing:.04em;margin-bottom:5px;font-family:inherit}
+  .box ul{list-style:none}
+  .box li{font-size:11.6px;color:var(--tx2);padding:2.5px 0;border-bottom:1px dashed var(--line)}
+  .box li:last-child{border-bottom:none}
+  .box li b{color:var(--navy)}
+  .matrix{width:100%;border-collapse:collapse;margin-top:9px;font-size:11.8px}
+  .matrix th{background:var(--navy);color:#fff;text-align:left;padding:5px 8px;border:1px solid var(--navy);font-weight:600}
+  .matrix td{padding:5px 8px;border:1px solid var(--line);vertical-align:top;background:#fff}
+  .matrix td:first-child{font-weight:800;color:var(--navy)}
+  .yes{color:var(--green);font-weight:800}.no{color:var(--tx3)}.warn{color:var(--amber);font-weight:800}
+  .note{background:#fdf6e4;border:1px dashed #d9bd6d;border-radius:8px;padding:8px 12px;font-size:11.6px;color:var(--tx2);margin-top:9px}
+  .note b{color:var(--gold)}
+
+  /* ---- 新闻视图 ---- */
+  .n-card{background:var(--card);border:1px solid var(--line2);border-radius:10px;margin:11px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .n-head{padding:10px 16px 8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;background:linear-gradient(180deg,#f7f4ea,#fff)}
+  .n-head .zh{font-size:14.5px;font-weight:800;color:var(--navy)}
+  .n-head .id{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:var(--tx3);font-style:italic}
+  .media-box{padding:8px 16px}
+  .media-box .h{font-size:10.5px;font-weight:800;color:var(--red);letter-spacing:.12em;margin:9px 0 4px;border-bottom:1px solid #f0d4da;padding-bottom:3px}
+  .media-box .h:first-child{margin-top:3px}
+  .media-box ul{list-style:none}
+  .media-box li{font-size:13.4px;color:var(--tx2);padding:4px 0 4px 14px;position:relative;text-align:justify}
+  .media-box li::before{content:"▸";position:absolute;left:0;color:var(--red)}
+  .media-box li b{color:var(--navy)}
+  .media-box li .who{display:block;font-size:10.5px;color:var(--tx3)}
+  .none-voice{color:var(--tx3);font-style:italic;font-size:12px}
+  .ai-box{margin:0 16px 12px;border:1px solid #c8d5ec;background:linear-gradient(180deg,#f3f7fd,#fff);border-radius:8px;padding:9px 13px}
+  .ai-box .h{font-size:10.5px;font-weight:800;color:var(--navy2);letter-spacing:.12em;margin-bottom:4px}
+  .ai-box p{font-size:13.4px;color:var(--tx);text-align:justify}
+  .refs{font-size:10.8px;color:var(--tx3);padding:4px 16px 11px}
+  .refs a{color:var(--tx3);text-decoration:underline dotted;margin-right:8px}
+  .refs a:hover{color:var(--navy2)}
+  .footer{margin-top:34px;border-top:2px solid var(--navy);padding-top:12px;font-size:11px;color:var(--tx3)}
+  .seal{display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-weight:800;font-size:12px;letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">United States · 119th Congress (2025–2026) · Official Track</div>
+  <h1>美国涉华技术立法跟踪台 <span class="hl">· 总览 / 媒体 双视图</span></h1>
+  <div class="meta-line"><b>数据截至：</b>2026-09-02（GMT+8）　|　<b>信源：</b>congress.gov / govinfo.gov / GPO / Punchbowl News / FDD / ARI / IBTimes / TIMEWELL / TrendForce，交叉核对　|　<b>跟踪范围：</b>9 部涉华技术法案 + FY2027 NDAA 捆绑专项</div>
+</header>
+
+<nav class="nav" id="nav">
+  <button class="tab active" data-view="overview">📜 总览<small>要点 · 编号 · 两院状态 · 最新进展</small></button>
+  <button class="tab" data-view="news">📰 媒体评价与 AI 快评<small>近两个月外部声音</small></button>
+</nav>
+
+<section class="view active" id="view-overview">
+  <div class="legend">
+    <span class="item"><span class="dot" style="background:var(--navy2)"></span>芯片/设备管制</span>
+    <span class="item"><span class="dot" style="background:#5b3fa0"></span>AI 模型/使用</span>
+    <span class="item"><span class="dot" style="background:var(--amber)"></span>专利</span>
+    <span class="item"><span class="dot" style="background:var(--gold)"></span>🎖 已入参院 NDAA 经理修正案</span>
+    <span class="item"><span class="dot" style="background:var(--amber)"></span>仅捆绑倡议</span>
+    <span class="item"><span class="dot" style="background:var(--green)"></span>已越过一院</span>
+  </div>
+
+  <!-- ===== NDAA 特卡 ===== -->
+  <div class="sec">🎖 FY2027 NDAA 专项 <small>捆绑情况 · 点下方按钮看完整矩阵与时间线</small></div>
+  <div class="ndaa-card" id="ndaa-top">
+    <div class="card-top">
+      <div class="zh"><span class="ord">★</span>2027 财年国防授权法案（NDAA）</div>
+      <div class="en">FY2027 National Defense Authorization Act</div>
+      <div class="nums">
+        <span class="num gold">众院 H.R.8800 <b>✔ 已过众院 216-212</b>（07-22）</span>
+        <span class="num red">参院 S.4784 <b>cloture 失败 50-46</b>（07-14）· 9/14 复会</span>
+        <span class="num">经理修正案 🎖 搭载 3 部芯片法案</span>
+      </div>
+    </div>
+    <div class="ov-grid">
+      <div>
+        <div class="blk-label">一句话定位</div>
+        <div class="point">每年必过的军事政策总盘子。今年被两党对华鹰派用作 <b>MATCH / Chip Security / AI OVERWATCH</b> 三部芯片法案的立法快车道，但参院被民主党以"伊朗战争未获授权 + 开支失衡"卡在程序关。</div>
+      </div>
+      <div>
+        <div class="blk-label">两院快照</div>
+        <div class="ch-line"><span class="ch-tag" style="background:#8a2020">众</span><span><b>H.R.8800</b>：7/22 全院 216-212 通过；含 Sec.1522 禁外国对手 AI、对华供应链禁令</span></div>
+        <div class="ch-line"><span class="ch-tag" style="background:var(--navy)">参</span><span><b>S.4784</b>：6/15 报出；7/14 cloture 50-46 失败；7/20-27 动议未成</span></div>
+      </div>
+      <div>
+        <div class="blk-label">最新进展</div>
+        <div class="latest warn"><b>07-22</b> 众院版通过；8 月初开启<b>非正式会前磋商</b>；预计跛脚鸭期收尾。</div>
+      </div>
+      <div>
+        <div class="blk-label">捆绑判定</div>
+        <div class="point" style="font-size:11.8px">经理修正案确认搭载 <b>MATCH、Chip Security、AI OVERWATCH</b>（禁售期改 18 个月）；RASA 与 AI 模型盗窃法案未上车。三法案目前仍非任何一院正式文本。</div>
+      </div>
+    </div>
+    <div class="card-actions" style="padding:0 16px 12px">
+      <button class="btn" data-act="fold" data-fold="ndaa-detail" data-closed="🗓 展开捆绑矩阵与立法时间线">🗓 展开捆绑矩阵与立法时间线</button>
+      <button class="btn red" data-act="goto-news" data-key="ndaa">📰 看 NDAA 近两月媒体评价与 AI 快评 →</button>
+    </div>
+    <div class="fold" id="fold-ndaa-detail">
+      <div class="fold-inner">
+        <div class="grid2">
+          <div class="box"><h6 style="color:#8a2020">▍众议院版（已过众院）</h6><ul>
+            <li><b>提出：</b>2026-05-13（Rogers）→ 军事委员会 6/4 以 44-12 报出（H.Rept.119-698）</li>
+            <li><b>全院通过：</b>2026-07-22，216-212（Roll 278，规则 H.Res.1438，21 次点名表决）</li>
+            <li><b>涉华/AI：</b>Sec.1522 国防部禁外国对手 AI；Ogles 修正案禁向"受关注国家"设点的 IT 商采购；人形机器人/光伏/二手船等供应链禁令</li>
+            <li><b>9 部目标法案：</b>点名修正案未见；约 250-320 项修正案经 5 组打包口头通过，逐项归属需查 H.Rept.119-755 Part A</li>
+          </ul></div>
+          <div class="box"><h6 style="color:var(--navy)">▍参议院版（卡程序关）</h6><ul>
+            <li><b>报出：</b>2026-06-15，SASC 18-9，S.Rept.119-127</li>
+            <li><b>07-14</b> cloture 失败 50-46（差 10 票）；抵制动因 = 伊朗战争 + 开支失衡</li>
+            <li><b>07-20 / 23 / 27</b> 多次"动议进入审议"未成，未达修正案环节</li>
+            <li><b>08 初</b> 开启非正式会前磋商；休会至 9/14 复会；规模约 1.14-1.15 万亿美元</li>
+          </ul></div>
+        </div>
+        <table class="matrix">
+          <tr><th style="width:190px">目标法案</th><th>参院经理修正案</th><th>众院版 H.R.8800</th><th>备注</th></tr>
+          <tr><td>MATCH 法案</td><td class="yes">✔ 纳入（加强版）</td><td class="no">未见独立文本</td><td>借 NDAA 规避单独立法僵局</td></tr>
+          <tr><td>Chip Security 法案</td><td class="yes">✔ 纳入（Cotton 另提 SA 6683 = 第 X 编 Subtitle H）</td><td class="no">未见独立文本</td><td>SA 6683 待参院进修正案环节</td></tr>
+          <tr><td>AI OVERWATCH 法案</td><td class="yes">✔ 纳入（对华禁售期 2 年→18 个月）</td><td class="no">未见独立文本</td><td>三法案中的核心件</td></tr>
+          <tr><td>远程访问安全 RASA</td><td class="no">✘ 未入</td><td class="no">未见独立文本</td><td>仅在 FDD"五法案"联名信（6/17）</td></tr>
+          <tr><td>阻止 AI 模型盗窃（H.R.8283）</td><td class="no">✘ 未入</td><td class="no">未见独立文本</td><td>同上</td></tr>
+          <tr><td>其余 4 部（对抗性 AI / 开源 AI / 专利两案）</td><td class="no">✘</td><td class="no">✘</td><td>与 NDAA 无捆绑关系</td></tr>
+        </table>
+        <div class="note"><b>关键判断：</b>三部芯片法案的 NDAA 路线已锁定，但都还没进入任何一院正式文本——命运取决于参院何时启动辩论（伊朗战争是前置障碍）与会前协商是否保留捆绑条款。历史上会前委员会多次删改技术出口条款，"上修正案 ≠ 进成法"。</div>
+        <ul class="tl" style="margin-top:8px">
+          <li><span class="d">06-15</span><div class="t"><b>参院 S.4784 报出</b>（S.Rept.119-127）</div></li>
+          <li class="hot"><span class="d">07-14</span><div class="t"><b>经理修正案确认捆绑三部芯片法案</b>（Punchbowl/ARI）；同日 cloture 失败 50-46；Cotton 提交 SA 6683</div></li>
+          <li class="hot"><span class="d">07-22</span><div class="t"><b>众院 H.R.8800 以 216-212 通过</b>，文本移交参院</div></li>
+          <li><span class="d">08 初</span><div class="t">两院启动<b>非正式会前磋商</b></div></li>
+          <li><span class="d">09-14</span><div class="t">参议院复会 —— NDAA 与捆绑法案的下一个观察窗口</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">📜 九部法案总览 <small>竖卡多列排布，一行并排 3 部；卡内自上而下：编号→要点→两院状态→最新进展</small></div>
+  <div class="billgrid" id="bill-list"></div>
+</section>
+
+<section class="view" id="view-news">
+  <div class="sec">📰 媒体评价与 AI 快评 <small>近两个月（2026-07-02 ~ 09-02）外部声音 · 本视图不含时间线与编号堆叠</small></div>
+  <div id="news-list"></div>
+</section>
+
+<div class="footer">
+  <div class="seal">◈ CONGRESS OF THE UNITED STATES · LEGISLATION TRACKER</div>
+  美国涉华技术立法跟踪台 · 国会配色竖卡版 v3.0 · 生成于 2026-09-02（GMT+8）｜配色参考美式官方文书风格：老荣耀蓝 #0A3161 / 美国红 #B31942 / 国会金 · 羊皮纸底<br>
+  说明：本页为静态预览版；动态版可接入 congress.gov API 自动刷新。数据口径见各卡信源链接。
+</div>
+</div>
+
+<script>
+const DATA = {
+  ndaa:{ key:"ndaa", zh:"2027 财年国防授权法案（NDAA 专项）", en:"FY2027 National Defense Authorization Act",
+    media:[
+      {t:"捆绑新闻主导近两月话题（美媒）",b:"Punchbowl News（7/14）率先披露参院经理修正案将搭载 MATCH、Chip Security、AI OVERWATCH 三部芯片法案，称其为对华鹰派数月游说的重大胜利，并披露 AI OVERWATCH 对华禁售期在捆绑版中由 2 年缩至 18 个月；ARI、FDD、American Compass/Heritage 等随即背书。同日报导的另一面是 NDAA 本身 50-46 的程序性失败——民主党以“伊朗战争未获国会授权 + 国防/内政开支失衡”为由拒开辩论。",w:"Punchbowl News 7/14 · ARI · GovConFeed 7 月"},
+      {t:"参院僵局的媒体解读",b:"GovConFeed/legis1 等指出 50-46 是“多数而非绝对多数”——Thune 改票保留重提权，法案是“被杠杆化而非死亡”；Angus King 点破争议核心：“若战争获得授权，讨论会是另一个样子”。",w:"GovConFeed · Legis1（7 月）"},
+      {t:"中方与亚太观察（8 月）",b:"南华早报（8/6）分析称两院版本均体现对华军事/技术/经济对抗的广泛两党共识，涉台、AI、供应链内容密集；AEI 专家库珀提示“最关键的对华条款是阻止中国获取先进 AI 芯片、云计算与半导体制造设备”，但“最终版本能否保留仍不确定，方向在推进”。",w:"SCMP 8/6（参考消息转）"},
+      {t:"秋季展望",b:"Truist 等华盛顿简报认为 NDAA 已连续通过逾 60 年，参议院 9/14 复会后的程序障碍大概率在会前妥协中消化，最终时间点或落在 11 月选举后的跛脚鸭期。",w:"Truist Washington Brief（8 月底）"}],
+    ai:"NDAA 是今年涉华技术立法的“总闸门”：芯片三部曲能否成法，不取决于它们自身，而取决于伊朗战争拨款争议这道参议院前置闸门何时打开。两条主线值得盯：① 参院复会后经理修正案是否会因迁就民主党而调整捆绑内容——历史上出口管制条款最常在会前阶段被软化；② 众院版 Sec.1522（禁外国对手 AI）与参院版芯片条款在会前谈判中的合并方式。若错过本届窗口，MATCH 等将全部沉入下一届重新排队。",
+    refs:[["Punchbowl 转载（Banks 官网）","https://www.banks.senate.gov/news/in-the-news/tech-chips-bills-poised-for-ndaa-ride/"],["GovConFeed","https://govconfeed.com/article/ai-export-control-bills-fy2027-ndaa-june-2026"],["CRS NDAA 状态报告","https://www.everycrsreport.com/changes/2026-07-17_IN12704_ff632080dc7f2354d6577a43beb02d0a2999ddc4__2026-07-24_IN12704_aa9ac0a274f07b77ac9b561c45d87c2df962662f.html"],["Truist 简报","https://truist.com/wealth/insights/special-commentary/washington"]]},
+  bills:[
+  {key:"match",no:"1",tag:"芯片·设备",cls:"b-chip",ndaa:"in",zh:"MATCH 法案 · 硬件技术管制多边协调法案",en:"Multilateral Alignment of Technology Controls on Hardware (MATCH) Act",focus:"★ 盟友博弈焦点",
+    nums:[["众院","H.R.8170"],["参院","S.4281"]],
+    point:"把对华半导体<b>设备</b>管制升级为“多边锁”：禁售浸没式 DUV 光刻/低温刻蚀等咽喉设备给中芯、长江存储、长鑫、华虹、华为等 15 家中企；断设备<b>维护/备件/远程服务</b>；给日荷盟友 <b>150 天对齐期</b>，逾期启用<b>外国直接产品规则（FDPR &gt;0% 即受辖）</b>。",
+    latest:"07-14 进入参院 NDAA 经理修正案（加强版）；众院全院表决滞留约 130 天无排期，参院银行委员会无听证；荷方持续游说反对。",
+    latestCls:"warn",
+    chambers:[["众","2026-04-02 提出 → 4/22 外委会 <b>36-8</b> 报出"],["参","2026-04-13 提出 → 银行委员会，9 名联署（含舒默/沃伦/科顿）"]],
+    tl:[["2026-04-02","众院提出 H.R.8170"],["2026-04-13","参院配套 S.4281 提出"],["2026-04-22","外委会 36-8 报出（同批 22 项出口管制法案）"],["2026-05-12","荷兰外贸大臣正式书面反对；5/24 荷驻韩大使对日经放话"],["2026-06-23/24","荷加入 Pax Silica 仍赴美游说反对；荷内阁“带着不满”离开华盛顿"],["2026-07-07","荷外贸大臣率 17 企访华，宣布成立中荷商务理事会"],["2026-07-14","进入参院 NDAA 经理修正案（加强版）；同日 NDAA cloture 失败"],["2026-07-15","ASML 二季报：上调全年指引 430-450 亿欧元，未定价法案按现文本通过"],["2026-08-09","上日程 109 天无全院排期；预测“过众院但本国会难成法”"],["2026-09-01","韩国自行将 AI 芯片/先进设备列入战略物项收紧管制"]],
+    media:[
+      {t:"荷兰（最激烈反对）",b:"荷外交部发言人 Duman：“荷兰在原则上强烈反对外国立法的域外适用……荷兰政策不能由外部时间表或单边要求决定”；外贸大臣 Sjoerdsma 6 月底赴华盛顿游说、称强迫协作“不可取”。",w:"IBTimes（7 月）· The Defense News（8 月中）· Lowdown"},
+      {t:"日本（观望被动）",b:"日本政府未明确表态是否跟进；业界借协会游说避免科技问题政治化。TIMEWELL 创始人滨本龙太称 MATCH 是日本“试金石”——东京电子等对华营收占 30-42%，150 天条款=二选一；日本国际问题研究所高山义明提出“深度参与细则设计 + WTO 合规性反制”思路。",w:"TIMEWELL 8/21 · Informed Clearly 8/21 · 走出去智库译介 6/29"},
+      {t:"韩国（两难）",b:"三星/SK 海力士在华巨额投资与美方施压冲突；SK 海力士 3 月向 ASML 下 69.13 亿欧元 EUV 大单被解读为反向重构芯片联盟；韩政府 9/1 自行收紧管制，7-8 月对 MATCH 鲜有点名表态。",w:"QQ/九万里综合 5/27 · 网易财经 9/2"},
+      {t:"美国国内与产业",b:"保守派联盟联名促众院保住 NDAA 捆绑；TrendForce 指维护条款与 FDPR 扩展是最大变量、最终清单仍可调整；若 ASML 全面断供中国收入或降 14-15%。",w:"ARI 7/14 · American Compass · TrendForce · BofA 情景分析"}],
+    ai:"以立法锁定盟友的对外经济战工具：真正杀伤力不在清单而在“150 天 + FDPR&gt;0%”的域外扩张与“断维护”存量打击。当前处于两院不同步窗口期，最大变量是荷兰——荷方反对的不是收紧而是管辖归属；一旦荷兰拖延，美国将被迫在“惩罚盟友”与“接受漏洞”间做首次压力测试。日韩大概率以“跟进但留白”的行政方式应对，公开表态少恰说明回旋空间收窄。",
+    refs:[["H.R.8170 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/8170/all-info"],["S.4281 Congress.gov","https://www.congress.gov/bill/119th-congress/senate-bill/4281/text"],["IBTimes","https://www.ibtimes.com/dutch-chipmakers-balancing-act-between-washington-beijing-3806546"],["TIMEWELL","https://timewell.jp/en/columns/semiconductor-export-control-japan-us-2026"],["Yeandel","https://www.yeandel.co.uk/22-q3-2026-updates/match-act-clock-not-started.html"]]},
+
+  {key:"chip",no:"2",tag:"芯片·成品",cls:"b-chip",ndaa:"in",zh:"Chip Security 法案 · 芯片安全法案",en:"Chip Security Act",
+    nums:[["众院","H.R.3447"],["参院","S.1705"]],
+    point:"给出口的先进 AI 芯片装<b>“行踪定位机制”</b>：出口前须可验证物理位置（软件 ping/现场审计/法律声明，禁止后门/间谍件/降级），发现走私转运即强制报告 BIS；直指 DeepSeek 用 Blackwell、华为 910B 含台积电芯片等走私案——把“看许可”变成“看实时位置”。",
+    latest:"07-14 Cotton 提交 SA 6683（=S.4784 第 X 编 Subtitle H）；确认入经理修正案。众院 42-0 报出后全院无排期。",
+    latestCls:"warn",
+    chambers:[["众","2025-05-15 提出 → 2026-03-26 外委会 <b>42-0</b> 报出，41 联署"],["参","2025-05-08 提出（Cotton）→ 银行委员会；7/14 SA 6683 双轨推进"]],
+    tl:[["2025-05","参院 S.1705、众院 H.R.3447 先后提出"],["2026-02-02","美国半导体行业协会（SIA）正式表态反对"],["2026-03-26","众院外委会 42-0 报出（附 CBO 成本评估）"],["2026-07-14","Cotton 提交 SA 6683；确认进入经理修正案"],["至今","主要推进路径 = NDAA 捆绑"]],
+    media:[
+      {t:"NDAA 搭车成近两月主线",b:"Punchbowl/ARI 报道其与 MATCH、AI OVERWATCH 一同进入参院经理修正案；FDD 称这是“把芯片当军售管”的标志。",w:"Punchbowl 7/14 · ARI 7/14"},
+      {t:"产业反对声仍在",b:"SIA 2 月正式反对是最清晰行业立场；商业媒体（Startup Fortune）提醒法案未走完委员会审批，并追问“芯片向美国政府报位置，海外客户数据中心还能藏住什么”。",w:"SIA · Startup Fortune"},
+      {t:"支持方叙事",b:"GeoComply 等定位公司联盟与国会“中国委员会”称其为反走私技术执法方案；支持者强调明令禁止后门/杀开关，回击 Clipper 芯片式监控联想。",w:"GeoComply · NBC News 背景"}],
+    ai:"政策共识度最高的芯片法案：42-0 一致票 + 41 人联署说明国会内几乎无路线之争，争议全在行业执行端。它与 MATCH（管设备）、AI OVERWATCH（管审批权）构成“设备—成品—审批”闭环；技术中立写法（软件 ping / 现场审计均可）使其更易落地。唯一实质悬念与 MATCH 相同：能否在 NDAA 窗口期搭上车。",
+    refs:[["H.R.3447 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/3447"],["CBO 成本评估","https://www.cbo.gov/publication/62310"],["SA 6683（国会记录）","https://congress.wiki/daily-record/2026-07-14/section/crec-2026-07-14-pt1-pgs3953-4"],["FDD Action","https://www.fddaction.org/action-alert/2026/03/25/action-alert-support-h-r-3447-the-chip-security-act-and-other-measures/"]]},
+
+  {key:"overwatch",no:"3",tag:"AI 芯片·审批",cls:"b-chip",ndaa:"in",zh:"AI OVERWATCH 法案",en:"AI OVERWATCH Act",
+    nums:[["众院","H.R.6875"],["参院","S.4456"]],
+    point:"把最先进 AI 芯片出口<b>当“军售”管</b>：对华等高风险对象逐单许可；商务部放行前国会 30 天审查期可联合决议否决；<b>成文法禁 Blackwell 级芯片对华出口</b>（捆绑版 2 年→18 个月）；对合规美国云服务商设豁免通道。",
+    latest:"07-14 确认进入参院 NDAA 经理修正案（禁售期 2 年→18 个月）；因 NDAA cloture 失败，尚未进入任何一院正式文本。",
+    latestCls:"warn",
+    chambers:[["众","2025-12-18 提出 → 2026-01-21 外委会 <b>42-2</b> 报出，42 联署"],["参","2026-04-30 提出（Banks/Warren）→ 银行委员会；参院版删国会否决机制"]],
+    tl:[["2025-12-18","众院提出 H.R.6875"],["2026-01-21","外委会 42-2 报出（带国会 30 日否决机制）"],["2026-04-30","参院 S.4456 提出（删否决机制、改通知制）"],["2026-06-17","FDD 等联名信列其为 NDAA 捆绑清单之首"],["2026-07-14","进经理修正案（禁售期压缩至 18 个月）；同日 NDAA cloture 失败"]],
+    media:[
+      {t:"NDAA 捆绑为最大新闻",b:"Punchbowl 披露经理修正案纳入并压缩禁售期至 18 个月；ARI/FDD/保守派联盟集体背书，称其为三法案中心件。",w:"Punchbowl 7/14 · ARI · American Compass"},
+      {t:"产业与法律界提醒",b:"GovConFeed/Value Add 认为三法案“同生共死”，会前协商历史上多次删改技术出口条款；科技业对“出口像军售一样过国会审查”反对声最大但未形成公开联名反制。",w:"GovConFeed · Value Add Pulse"},
+      {t:"中方视角",b:"聚焦“把 GPU 当军品管”的定性升级与云豁免条款（算力不出境、对华持股&lt;10% 等）。",w:"国内行业自媒体"}],
+    ai:"国会从行政当局手里“夺回”对华 AI 芯片政策主导权的宪法级动作——把“今天可松、明天可紧”的行政裁量改写成国会事前审查 + 成文法禁售期，是对行政放水的立法锁死（背景：H200 已获批未到货）。参众差异（否决权 vs 通知制）说明内部仍有分歧，18 个月是折中产物；它是三部捆绑法案中最可能改写产业规则的一部。",
+    refs:[["H.R.6875 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/6875/text"],["S.4456 GovInfo","https://www.govinfo.gov/content/pkg/BILLS-119s4456is/xhtml/BILLS-119s4456is.html"],["Punchbowl（Banks 官网）","https://www.banks.senate.gov/news/in-the-news/tech-chips-bills-poised-for-ndaa-ride/"],["FDD Action","https://www.fddaction.org?p=2121/"]]},
+
+  {key:"rasa",no:"4",tag:"云访问·算力",cls:"b-chip",ndaa:"ask",zh:"远程访问安全法案（RASA）",en:"Remote Access Security Act",
+    nums:[["众院","H.R.2683","green","✔369-22"],["参院","S.3519"]],
+    point:"把<b>“外国人对受控美物的远程网络访问（含云算力调用）”</b>纳入《出口管制改革法》：中企“租海外英伟达服务器、境内远程调算力”将被视为出口行为、需许可并可罚；云服务商被置于 KYC 义务。<b>实体芯片禁令延伸到“云里的算力”</b>。",
+    latest:"参院银行委员会挂起近 8 个月；8/4 Banks、Slotkin 新加入联署（重推信号）；未进入 NDAA 经理修正案。",
+    latestCls:"stall",
+    chambers:[["众","2025-04-07 提出 → <b>2026-01-12 全院 369-22 通过</b>，移交参院"],["参","2025-12-17 S.3519 提出（McCormick/Wyden）→ 银行委员会"]],
+    tl:[["2025-04-07","众院提出 H.R.2683"],["2025-12-17","参院配套 S.3519 提出"],["2026-01-12","众院全院 369-22 通过"],["2026-06-17","入 FDD“五法案捆绑”联名信（未进 7/14 经理修正案）"],["2026-08-04","参院联署扩至 6 人（Banks、Slotkin 加入）"]],
+    media:[
+      {t:"近两月媒体声音稀疏",b:"主要动态在 NDAA 捆绑博弈：6/17 FDD 联名信列入“五法案”，但 Punchbowl 7/14 披露的经理修正案只收三部芯片法案，RASA 落选——合规界解读为云管制复杂度高、优先序靠后。",w:"GovConFeed 6/17 · Punchbowl 7/14"},
+      {t:"合规界持续提示",b:"Lexology 等向云服务商/数据中心企业提示：一旦成法，EAR 管辖将首次系统覆盖“远程访问”，需提前构建 KYC 与许可申报能力。",w:"Lexology"},
+      {t:"中方视角",b:"合规周报将其视为美对华管控“从物理交付延伸至数字接入”的标志性步骤。",w:"商务部贸易周报（转合规小叨客）"}],
+    ai:"众院已通关、参院冷处理 8 个月——最典型的半程法案。漏洞真实存在，但执法可操作性（怎么证明访问、云商如何 KYC）远不如“给芯片装定位”直观，这解释了为何排在 FDD 倡议末位、未进经理修正案。前景大概率系于 NDAA 之外窗口或下届国会；8/4 新增 Banks/Slotkin 说明提案人正把它当“打包重推”弹药。",
+    refs:[["H.R.2683 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/2683/text"],["S.3519 联署","https://www.congress.gov/bill/119th-congress/senate-bill/3519/cosponsors?s=1&overview=closed"],["国会记录（1/12）","https://www.gpo.gov/fdsys/pkg/CREC-2026-01-12/html/CREC-2026-01-12-pt1-PgH621-5.htm"],["Lexology","https://www.lexology.com/library/detail.aspx?g=9813c777-e72d-4a77-abef-26f35253136c"]]},
+
+  {key:"theft",no:"5",tag:"AI 模型·蒸馏",cls:"b-model",ndaa:"ask",zh:"阻止美国 AI 模型盗窃法案",en:"Deterring American AI Model Theft Act of 2026",
+    nums:[["众院","H.R.8283"],["参院","暂无配套"]],
+    point:"针对外国实体对美闭源模型的<b>“蒸馏攻击”</b>（API 高频查询逆向提取权重/架构）：公开“AI 模型提取攻击者清单”，可列实体清单、动用 IEEPA 制裁；明确合规蒸馏/按服务条款训练属合法研究、予以豁免——只打盗窃、不打开源。",
+    latest:"4/22 外委会 43-0 报出后全院无排期；联署滚增至 20+；无参院配套；未入经理修正案。",
+    latestCls:"stall",
+    chambers:[["众","2026-04-15 提出 → 4/22 外委会 <b>43-0</b> 报出，20+ 联署"],["参","截至 9/2 无参院文本"]],
+    tl:[["2026-04-15","众院提出 H.R.8283"],["2026-04-22","外委会 43-0 报出（与 MATCH 同日）"],["2026-06-17","入 FDD“五法案”联名信（未进经理修正案）"],["2026-07~08","联署滚增至 20+；全院无排期"]],
+    media:[
+      {t:"近两月热度中等",b:"主流讨论围绕 NDAA 五法案倡议中它系陪跑（未入经理修正案）；行业分析（HillSignal）直言其“零拨款、几乎全为意见声明，市场影响趋近于零”，同时承认 43-0 意味着防蒸馏已成两党共识信号。",w:"HillSignal 8 月 · GovConFeed"},
+      {t:"AI 政策通讯视角",b:"Legisletter 将它与“中国芯片出口战”并列为国会 AI 安全主线，8 月仍收录其联署增长。",w:"Legisletter"}],
+    ai:"政治信号大于执法实效，却是 AI 资产化叙事的分水岭：把“模型权重=出口管制物项”首次推入国会主航道，43-0 全票说明“中国蒸馏美国闭源模型”已被定性为威胁。但文本以可裁量条款为主、执行模糊，短期走完立法概率不高——参院无配套意味着实际闸门在下届。",
+    refs:[["H.R.8283 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/8283/all-info"],["GovInfo 文本","https://www.govinfo.gov/content/pkg/BILLS-119hr8283ih/pdf/BILLS-119hr8283ih.pdf"],["HillSignal","https://www.hillsignal.com/signals/deterring-american-ai-model-theft-act-of-2026-72f5a089-9806-4848-827b-5a56715527f6"],["Legisletter","https://legisletter.org/issues/ai-regulation"]]},
+
+  {key:"noaa",no:"6",tag:"AI 采购禁令",cls:"b-model",ndaa:"no",zh:"禁止对抗性 AI 法案",en:"No Adversarial AI Act",
+    nums:[["众院","H.R.4142"],["参院","S.2177"]],
+    point:"联邦采购安全委员会编制并每 180 天更新<b>“对手 AI 禁用清单”</b>，禁联邦机构采购/使用中、俄、伊、朝企业 AI（点名 DeepSeek）；研究/国安窄豁免须书面说明并通知国会。属采购端防御立法。",
+    latest:"两院 2025-06-25 提出后空转超 14 个月；同理念已由 FY2026 NDAA（Sec.1532/6604）先行落地。",
+    latestCls:"stall",
+    chambers:[["众","2025-06-25 提出 → 监督与政府改革委员会无实质动作"],["参","2025-06-25 提出 → 国土安全与政府事务委员会无进展"]],
+    tl:[["2025-06-25","两院同日提出（呼应 DeepSeek 事件）"],["2025-12","FY2026 NDAA 先行落地国防部/情报界禁用"],["2026 至今","两院版本均无新动作——立法空转"]],
+    media:[{t:"近两个月暂无明显声音",b:"最后成规模曝光停留在 2025 年 6-7 月；2026 年因国防/情报端禁令先行落地、各机构早已自查封禁，新闻价值被稀释，7-8 月未见新评论。",w:"The Record / EcomCrew（2025 年）"}],
+    ai:"目标已被行政与预算路径提前实现的僵尸法案：2025 年通过行政禁令与 FY2026 NDAA 第 1532/6604 条“绕过式”落地，单行法失去紧迫性。它提醒观察者：判断涉华立法影响力不能只看自身，要看条款是否已通过 NDAA/拨款案先行变现。若无新丑闻，大概率随本届国会自然死亡，内容以下届重新包装回归。",
+    refs:[["H.R.4142 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/4142"],["S.2177 Congress.gov","https://www.congress.gov/bill/119th-congress/senate-bill/2177"],["The Record","https://therecord.media/bipartisan-bill-ban-deepseek-federal"]]},
+
+  {key:"oss",no:"7",tag:"开源生态",cls:"b-model",ndaa:"no",zh:"开源人工智能领导法案 ⭐ 最新引入",en:"Open-Source AI Leadership Act",
+    nums:[["众院","H.R.10152"],["参院","暂无配套"]],
+    point:"责成商务部推动<b>美国合格开源模型</b>全球采用（清障、签协议、出政策）；年度公开评估<b>“外国对手模型”风险</b>并对比中外开源模型成本/性能；明文<b>禁止商务部封禁开源模型</b>——对冲 DeepSeek/阿里 Qwen 开源扩张。",
+    latest:"2026-08-27 刚提出；E&C 小组委员会 9/1 审议（The Ledger Asia 9/2 报道已推进，congress.gov 未更新，按“据报道”口径）。",
+    latestCls:"ok",
+    chambers:[["众","2026-08-27 提出 → 能源与商务委员会；6/30 已有讨论稿听证"],["参","截至 9/2 无参院版本"]],
+    tl:[["2026-06-30","E&C 相关小组委就讨论稿举行听证"],["2026-08-27","正式文本 H.R.10152 提出"],["2026-09-01","CMT 小组委员会排期审议；The Ledger Asia 9/2 报道已过会"]],
+    media:[
+      {t:"首日解读（9/2）",b:"The Ledger Asia 率先报道：法案表明中美 AI 竞争正从先进芯片/闭源平台蔓延到“可下载、可定制、可部署”的开源权重模型。",w:"The Ledger Asia 9/2"},
+      {t:"行业观察",b:"Windows Forum 等提示勿夸大：零拨款、零强制、零采购偏好，核心实体约束仅“不得封禁开源模型”；提醒其“开源”定义宽于严格开源。",w:"Windows Forum"},
+      {t:"背景语境",b:"出台恰逢美内“是否封禁最强开源权重”（Mythos 事件后）辩论激化，本法即“扶持派”对“封禁派”的立法对冲。",w:"开源政策讨论"}],
+    ai:"迟来的防守反击——华盛顿终于用产业政策回应 DeepSeek 效应。2025-26 涉华 AI 立法几乎全是堵，本法补上“疏”的一环：承认开源已成为中国向全球输出 AI 影响力的主通道。零拨款文本在本届剩余 4 个月走完全程概率很低；值得跟踪它能否成为下届“AI 开源扶持”立法的先声。",
+    refs:[["H.R.10152 GovInfo","https://www.govinfo.gov/content/pkg/BILLS-119hr10152ih/xhtml/BILLS-119hr10152ih.html"],["The Ledger Asia","https://theledger.asia/us-open-source-ai-bill-seeks-strategic-edge-over-chinas-model-ecosystem"]]},
+
+  {key:"papa",no:"8",tag:"专利·授予执行",cls:"b-patent",ndaa:"no",zh:"禁止敌对专利法案（2026）",en:"Prohibiting Adversarial Patents Act of 2026（PAPA）",
+    nums:[["众院","H.R.9142"],["参院","暂无配套"]],
+    point:"列美财政部 <b>NS-CMIC</b>/国防部 <b>1260H</b>/FCC <b>第 2 节清单</b>企业及其关联方：<b>不得再获新专利；已获专利不可执行；禁用 PPH 加速</b>；总统可豁免。保留所有权、剥夺执行价值，直指华为/中兴“许可费反制”能力。2023 版 H.R.5475 复活，获双委员会主席背书。",
+    latest:"司法委员会空转近 3 个月，无听证/标记日程；7-8 月无新动作；媒体声音转淡。",
+    latestCls:"stall",
+    chambers:[["众","2026-06-04 提出（Fitzgerald + Moolenaar/Issa）→ 司法委员会"],["参","无参院文本"]],
+    tl:[["2023-09","前身 H.R.5475 提出 → 止步司法委员会失效"],["2026-06-04","H.R.9142 复活提出，同日配套 H.R.9143"],["2026-06-12","行业媒体提示对无人机等赛道影响"],["2026-06","C4IP 发声反对：引发报复、动摇专利体系信心"],["至今","司法委员会无公开推进"]],
+    media:[
+      {t:"近两月声音转淡",b:"7-8 月无重大新评论或委员会动作；外部声音停留在 6 月引入期——支持方强调华为 6.3 亿美元许可费案例；反对方 C4IP 警告报复循环与 TRIPS 冲突。",w:"Fitzgerald 官网 · C4IP · Dronelife"},
+      {t:"中方视角",b:"企业专利观察等判断“走进下一实质阶段难度极大”，并提示若美实施，在华美企知识产权将成反制靶点。",w:"企业专利观察 6 月"}],
+    ai:"法律技术含量最高、成法概率最低的一部——把名单企业专利不可执行写进 35 编几乎必撞 TRIPS 国民待遇与财产权条款。但 2026 版差异在“人”：双委员会主席背书等于把专利武器化放进两党建制派议程，即便不落地，思路也会经 USPTO 审查新规/1260H 扩围/ITC 程序曲线变现。中企真实风险不是专利被废，而是美企诉讼突然变好打。",
+    refs:[["H.R.9142 GovInfo","https://www.govinfo.gov/content/pkg/BILLS-119hr9142ih/pdf/BILLS-119hr9142ih.pdf"],["H.R.9142 Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/9142"],["Dronelife","https://www.dronelife.com/2026/06/12/adversarial-patents-act-drone-industry"]]},
+
+  {key:"fapd",no:"9",tag:"专利·披露",cls:"b-patent",ndaa:"no",zh:"外国敌对专利披露法案",en:"Foreign Adversary Patent Disclosure Act",
+    nums:[["众院","H.R.9143"],["参院","暂无配套"]],
+    point:"专利（含临时）申请人须披露：前 5 年任何所有权权益者是否受<b>外国对手（中俄古伊朝）</b>控制实体雇佣、获其国家基金/人才计划资助、或获其他经济激励；USPTO 可调取合同核实（保密存档）；小企业豁免。2023 版条款拆出单独立法。",
+    latest:"司法委员会空转；0 名共同发起人；模型估通过概率约 10.8%；7-8 月无新动作。",
+    latestCls:"stall",
+    chambers:[["众","2026-06-04 提出（Fitzgerald 单独）→ 司法委员会"],["参","无参院文本"]],
+    tl:[["2023-09","披露条款作为 H.R.5475 一部分提出（未落地）"],["2026-06-04","H.R.9143 独立提出（与 H.R.9142 一主一配）"],["至今","无委员会推进动作"]],
+    media:[{t:"近两个月暂无明显声音",b:"自 6/4 提出后媒体关注度极低（0 联署），仅法律追踪类网站做条款拆解；7-8 月无新增评论。引入期评论集中于对中外科研合作的寒蝉效应。",w:"Congress.wiki · MyBillboard"}],
+    ai:"H.R.9142 的影子法案：单独看近乎无害（多填一张表、小企业豁免），但与禁止敌对专利并排提出即构成递进剧本——先让涉华资助的专利申请留下档案，未来任何剥夺权利的操作都有据可查，是中方警惕的取证前置。当前 0 联署几乎确定随本届空转；但若 H.R.9142 获听证其优先级会被连带抬升。对跨境科研机构，它是九部中最可能悄悄改变日常合规动作的一部。",
+    refs:[["H.R.9143 GovInfo","https://www.govinfo.gov/content/pkg/BILLS-119hr9143ih/xhtml/BILLS-119hr9143ih.html"],["Congress.wiki","https://congress.wiki/map/legislation/foreign-adversary-patent-disclosure-act-119hr9143"],["MyBillboard","https://mybillboard.org/bill/hr-9143-119"]]}
+  ]
+};
+
+const NDAA_LABEL = {in:'🎖 已入参院 NDAA 经理修正案',ask:'⚠ 仅捆绑倡议（未上车）',no:'与 NDAA 无捆绑关系'};
+
+/* 五步流程当前阶段：[众议院idx, 参议院idx]，-1=该院暂无版本/未启动 */
+const FLOW = {match:[2,1],chip:[2,1],overwatch:[2,1],rasa:[3,1],theft:[2,-1],noaa:[1,1],oss:[1,-1],papa:[1,-1],fapd:[1,-1]};
+const HSTEPS=["提出","委员会","众院全院","参院","总统签署"];
+const SSTEPS=["提出","委员会","参院全院","众院","总统签署"];
+function flowBar(key,ch){
+  const idx = FLOW[key] ? FLOW[key][ch==='H'?0:1] : -1;
+  const steps = ch==='H'?HSTEPS:SSTEPS;
+  if(idx<0) return `<div class="flow-lbl">${ch==='H'?'众议院流程':'参议院流程'} · 暂无配套法案</div>
+    <div class="flow" style="opacity:.45">${steps.map(s=>`<span class="st off">${s}</span>`).join("")}</div>`;
+  return `<div class="flow-lbl">${ch==='H'?'众议院流程':'参议院流程'}</div>
+    <div class="flow">${steps.map((s,i)=>`<span class="st ${i<idx?'done':(i===idx?'on':'')}">${i<idx?'✓ ':''}${s}</span>`).join("")}</div>`;
+}
+function flowWrap(key){
+  return `<div class="flow-wrap">${flowBar(key,'H')}${flowBar(key,'S')}</div>`;
+}
+
+/* ---------- 总览：竖卡 ---------- */
+function ovCard(b){
+  const nums = b.nums.map(n=>`<span class="num ${n[2]||""}">${n[0]} ${n[1]}${n[3]?` <b>${n[3]}</b>`:""}</span>`).join("");
+  const ch = b.chambers.map(c=>`<div class="ch-line"><span class="ch-tag" style="background:${c[0]==='众'?'#8a2020':'var(--navy)'}">${c[0]}</span><span>${c[1]}</span></div>`).join("");
+  const ribbonCls = b.ndaa==='in'?'in':(b.ndaa==='ask'?'ask':'no');
+  return `
+  <div class="card" id="ov-${b.key}">
+    <div class="card-top">
+      <span class="ord">${b.no}</span><span class="zh">${b.zh}</span>${b.focus?` <span class="focus-flag">${b.focus}</span>`:""}
+      <div class="en">${b.en}</div>
+      <div class="nums">${nums}</div>
+      <div><span class="ribbon ${ribbonCls}">${NDAA_LABEL[b.ndaa]}</span></div>
+    </div>
+    <div class="card-body">
+      <div><div class="blk-label">法案要点</div><div class="point">${b.point}</div></div>
+      <div><div class="blk-label">两院状态 · 立法流程</div>${ch}${flowWrap(b.key)}</div>
+      <div><div class="blk-label">最新进展</div><div class="latest ${b.latestCls}">${b.latest}</div></div>
+    </div>
+    <div class="card-actions">
+      <button class="btn" data-act="fold" data-fold="tl-${b.key}">🗓 立法节点</button>
+      <button class="btn red" data-act="goto-news" data-key="${b.key}">📰 媒体·AI快评</button>
+    </div>
+    <div class="fold" id="fold-tl-${b.key}">
+      <div class="fold-inner"><ul class="tl">${b.tl.map(t=>`<li${t[2]?' class="hot"':''}><span class="d">${t[0]}</span><div class="t">${t[1]}</div></li>`).join("")}</ul></div>
+    </div>
+  </div>`;
+}
+function renderOverview(){
+  document.getElementById("bill-list").innerHTML = DATA.bills.map(ovCard).join("");
+}
+
+/* ---------- 媒体视图 ---------- */
+function nBlock(o){
+  const media = (o.media||[]).map(m=>`<li><b>${m.t}</b>：${m.b}<span class="who">${m.w}</span></li>`).join("");
+  const refs = (o.refs||[]).map(r=>`<a href="${r[1]}" target="_blank">${r[0]}</a>`).join("");
+  const id = o.key==='ndaa'?'news-ndaa':'news-'+o.key;
+  return `
+  <div class="n-card" id="${id}">
+    <div class="n-head"><span class="zh">${o.zh}</span><span class="id">${o.en}</span></div>
+    <div class="media-box"><div class="h">◈ 媒体评价（近两个月 · 2026-07-02 ~ 09-02）</div>
+      <ul>${media||`<li class="none-voice">近两个月暂无明显声音。</li>`}</ul></div>
+    <div class="ai-box"><div class="h">⟡ AI 快评</div><p>${o.ai}</p></div>
+    <div class="refs"><b>信源：</b>${refs}</div>
+    <div class="card-actions" style="padding:0 16px 12px"><button class="btn" data-act="goto-ov" data-key="${o.key}">← 回总览</button></div>
+  </div>`;
+}
+function renderNews(){
+  document.getElementById("news-list").innerHTML = nBlock(DATA.ndaa) + DATA.bills.map(nBlock).join("");
+}
+
+/* ---------- 交互 ---------- */
+function switchView(v){
+  document.querySelectorAll(".view").forEach(el=>el.classList.remove("active"));
+  document.getElementById("view-"+v).classList.add("active");
+  document.querySelectorAll(".nav .tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.getElementById("nav").addEventListener("click",e=>{
+  const t=e.target.closest(".tab"); if(!t) return; switchView(t.dataset.view);
+});
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-act]"); if(!g) return;
+  const act=g.dataset.act;
+  if(act==="fold"){
+    const f=document.getElementById("fold-"+g.dataset.fold);
+    const open=f.classList.toggle("open");
+    g.classList.toggle("active",open);
+    g.textContent = open?"收起 ▲":(g.dataset.closed||"🗓 立法节点");
+  }else if(act==="goto-news"){
+    switchView("news");
+    const el=document.getElementById("news-"+g.dataset.key);
+    if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),90);
+  }else if(act==="goto-ov"){
+    switchView("overview");
+    const key=g.dataset.key==='ndaa'?'ndaa-top':'ov-'+g.dataset.key;
+    const el=document.getElementById(key);
+    if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),90);
+  }
+});
+renderOverview(); renderNews();
+</script>
+</body>
+</html>
