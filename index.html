@@ -202,6 +202,10 @@
   .p-conf.low{background:#eef0f3;color:var(--tx3);border:1px solid var(--line2)}
   .p-basis{margin-top:3px;color:var(--tx2);font-size:11px}
   .p-basis b{color:var(--tx)}
+  /* ===== 扩展跟踪（贸易/制裁类） ===== */
+  .tag.b-trade{background:#e6f0ea;color:#1d6b4f;border:1px solid #a9cdbc}
+  .ext-note{background:#fbfaf6;border:1px dashed var(--line2);border-radius:8px;padding:7px 12px;font-size:11.6px;color:var(--tx2);margin:6px 0 10px}
+  .ext-note b{color:#1d6b4f}
 </style>
 </head>
 <body>
@@ -224,6 +228,7 @@
     <span class="item"><span class="dot" style="background:var(--navy2)"></span>芯片/设备管制</span>
     <span class="item"><span class="dot" style="background:#5b3fa0"></span>AI 模型/使用</span>
     <span class="item"><span class="dot" style="background:var(--amber)"></span>专利</span>
+    <span class="item"><span class="dot" style="background:#1d6b4f"></span>贸易/制裁（扩展跟踪）</span>
     <span class="item"><span class="dot" style="background:var(--gold)"></span>🎖 已入参院 NDAA 经理修正案</span>
     <span class="item"><span class="dot" style="background:var(--amber)"></span>仅捆绑倡议</span>
     <span class="item"><span class="dot" style="background:var(--green)"></span>已越过一院</span>
@@ -312,6 +317,10 @@
 
   <div class="sec">📜 九部法案总览 <small>竖卡多列排布，一行并排 3 部；卡内自上而下：编号→要点→两院状态→最新进展</small></div>
   <div class="billgrid" id="bill-list"></div>
+
+  <div class="sec" style="border-bottom-color:#1d6b4f;color:#1d6b4f">🌐 扩展跟踪 <small>不属 1+9 技术立法主线、但与对华博弈直接相关的立法（按用户要求纳入）</small></div>
+  <div class="ext-note">本区法案与 1+9 分开维护：<b>不参与</b> NDAA 捆绑矩阵，但同样进入「最新动向」流水与「媒体·AI 快评」体系；自动监控逐步纳入。</div>
+  <div class="billgrid" id="ext-list"></div>
 </section>
 
 <section class="view" id="view-feed">
@@ -319,7 +328,7 @@
   <div class="note" id="feed-meta" style="margin-top:0"></div>
   <div class="sec" style="font-size:14.5px;color:#8a2020;border-bottom-color:var(--red);margin:18px 0 6px">▍ 立法动向 <small>congress.gov / federalregister.gov 等官方动作 · 同步回流进对应法案卡的“立法节点”</small></div>
   <div id="feed-law"></div>
-  <div class="sec" style="font-size:14.5px;border-bottom-color:var(--navy);margin:18px 0 6px">▍ 外界评价 <small>中外主流媒体（路透/彭博/卫报/CNN/BBC/联合早报 与 环球时报/观察者网/凤凰卫视 等）及“出口管制合规研究”“合规视点”公众号观点 · 仅限 1+9 法案</small></div>
+  <div class="sec" style="font-size:14.5px;border-bottom-color:var(--navy);margin:18px 0 6px">▍ 外界评价 <small>中外主流媒体（路透/彭博/卫报/CNN/BBC/联合早报 与 环球时报/观察者网/凤凰卫视 等）及“出口管制合规研究”“合规视点”公众号观点 · 范围：1+9 + 扩展跟踪法案</small></div>
   <div id="feed-voice"></div>
 </section>
 
@@ -477,6 +486,125 @@ const DATA = {
     media:[{t:"近两个月暂无明显声音",b:"自 6/4 提出后媒体关注度极低（0 联署），仅法律追踪类网站做条款拆解；7-8 月无新增评论。引入期评论集中于对中外科研合作的寒蝉效应。",w:"Congress.wiki · MyBillboard"}],
     ai:"H.R.9142 的影子法案：单独看近乎无害（多填一张表、小企业豁免），但与禁止敌对专利并排提出即构成递进剧本——先让涉华资助的专利申请留下档案，未来任何剥夺权利的操作都有据可查，是中方警惕的取证前置。当前 0 联署几乎确定随本届空转；但若 H.R.9142 获听证其优先级会被连带抬升。对跨境科研机构，它是九部中最可能悄悄改变日常合规动作的一部。",
     refs:[["H.R.9143 GovInfo","https://www.govinfo.gov/content/pkg/BILLS-119hr9143ih/xhtml/BILLS-119hr9143ih.html"],["Congress.wiki","https://congress.wiki/map/legislation/foreign-adversary-patent-disclosure-act-119hr9143"],["MyBillboard","https://mybillboard.org/bill/hr-9143-119"]]}
+  ],
+  ext: [
+{
+ "key": "ruiran",
+ "no": "E1",
+ "tag": "贸易·制裁",
+ "cls": "b-trade",
+ "ndaa": "no",
+ "zh": "林赛·O·格雷厄姆制裁俄罗斯与伊朗法案（2026）",
+ "en": "Lindsey O. Graham Sanctioning Russia and Iran Act of 2026",
+ "nums": [
+  [
+   "众院",
+   "H.R.5334"
+  ],
+  [
+   "参院",
+   "H.R.5334（参院修正版）"
+  ],
+  [
+   "进程",
+   "已过两院 · 待总统签署",
+   "green"
+  ]
+ ],
+ "point": "对俄能源/金融/军工与“影子船队”全面制裁，并把<b>次级制裁“关税化”</b>：授权总统对俄原油/天然气<b>前五大进口国</b>及协助规避制裁的前五国加征<b>最高 100% 关税</b>，并新增“国家利益豁免”；限制对俄新投资与俄主权债交易；伊朗制裁法延至 2031。载体为 H.R.5334（原为幼儿教师税收扣除案，被参院改造为制裁载体）。<b>对华要点：</b>中国是俄油气最大买家之一，客观上落入“前五大买家”射程；众院否决了点名含中国在内 10 国的修正案，最终文本采用“前五大”标准而非点名。",
+ "latest": "09-16 众院 262-159 通过参院修正版（58 名民主党跨党支持），送交总统签署；参院 8/7 已 86-11 通过；中方外交部 7/15、商务部 9/15 两度表态坚决反对“次级关税”。",
+ "latestCls": "ok",
+ "chambers": [
+  [
+   "众",
+   "2025-09-11 提出（Panetta；税收+制裁）→ 2026-04-27 口头表决通过 → 09-16 通过参院修正版 262-159"
+  ],
+  [
+   "参",
+   "2026-08-07 以 86-11 通过修正案（主体为对俄伊制裁）→ 08-10 送还众院"
+  ]
+ ],
+ "tl": [
+  [
+   "2025-04",
+   "格雷厄姆牵头起草对俄制裁草案（初版曾拟最高 500% 关税）"
+  ],
+  [
+   "2025-09-11",
+   "H.R.5334 由 Panetta 提出（幼儿教师税收扣除条款）"
+  ],
+  [
+   "2026-04-27",
+   "众院口头表决通过 H.R.5334（40 分钟辩论）"
+  ],
+  [
+   "2026-07-11",
+   "格雷厄姆骤逝；法案以其命名，特朗普表态支持推进"
+  ],
+  [
+   "2026-07-14",
+   "参院公布修订版：关税上限由 500% 降至对“前五大买家”最高 100%，新增国家利益豁免"
+  ],
+  [
+   "2026-08-07",
+   "参院 86-11 通过修正案；08-10 送还众院"
+  ],
+  [
+   "2026-09-15",
+   "众院程序性投票 214-211 过关；商务部答记者问谴责“次级关税”"
+  ],
+  [
+   "2026-09-16",
+   "众院 262-159 通过参院修正版，送交总统签署"
+  ]
+ ],
+ "media": [
+  {
+   "t": "美方与学界定性",
+   "b": "CSIS 称“该法案最重要的新增授权，是允许对大量购买俄能源的第三国征收最高 100% 关税”；支持者称关税条款意在威慑中印继续采购俄能源，批评者担心总统将关税武器化、波及欧盟等盟友。",
+   "w": "中新网 9/17 引 CSIS · AP/NBC"
+  },
+  {
+   "t": "印度受冲击最直接",
+   "b": "印度 7 月俄油占其进口逾一半；法案为其创造被加税的法律路径，但“不等于自动加税”，需总统另行决定；美印正谈临时贸易协定，关税权成为新筹码。",
+   "w": "The Hindu · Moneycontrol 9/17"
+  },
+  {
+   "t": "中方两度表态（官方）",
+   "b": "外交部 7/15：坚决反对没有国际法依据、未经安理会授权的非法单边制裁，“搞双重标准、胁迫施压，最终只会搬起石头砸自己的脚”；商务部 9/15 答问：以购买俄油为由对华加征“次级关税”是典型单边霸凌和经济胁迫，中方将采取一切必要措施维护自身权益。",
+   "w": "外交部/商务部（四川省商务厅周报 · 观察者网）"
+  },
+  {
+   "t": "点名修正案遭否决",
+   "b": "Hoyer–Kaptur 修正案拟点名中国、印度、土耳其、阿塞拜疆、匈牙利、哈萨克斯坦、吉尔吉斯斯坦、新加坡、斯洛伐克、阿联酋 10 国，被众院规则委员会 3-7 否决、未入最终文本；“前五大买家”标准使总统保有裁量空间。",
+   "w": "Moneycontrol · News18 9/17"
+  }
+ ],
+ "ai": "这是本届国会首个把“次级制裁”改造成“关税化”工具的立法：杀伤力不在对俄制裁条款本身（多与既有行政令重叠），而在把最高 100% 关税授权以成文法形式交到白宫手中，且豁免权同样握在总统一人。对华含义分两层：文本未点名中国，但“俄油气前五大买家”客观上覆盖中国，是否落槌取决于单次政治裁量；众院否决点名修正案，说明共和党刻意保留“要价空间”而非即刻对华摊牌。该案属贸易/地缘制裁立法，列为扩展跟踪，不属 1+9 技术立法主线。",
+ "aiTs": "2026-09-17",
+ "refs": [
+  [
+   "H.R.5334 Congress.gov",
+   "https://www.congress.gov/bill/119th-congress/house-bill/5334"
+  ],
+  [
+   "The Hindu（众院通过 · 印度影响）",
+   "https://www.thehindu.com/news/international/us-house-passes-russia-sanctions-bill-india-tariffs/article71474350.ece"
+  ],
+  [
+   "Moneycontrol（参院版本与修正案）",
+   "https://www.moneycontrol.com/news/india/us-house-passes-100-russia-sanctions-bill-india-faces-risk-of-higher-tariffs-14031541.html"
+  ],
+  [
+   "观察者网（参院通过 · 中方立场）",
+   "https://www.guancha.cn/internation/2026_08_08_826566.shtml"
+  ],
+  [
+   "外交部 7/15 表态（四川省商务厅周报）",
+   "https://swt.sc.gov.cn/sccom/c25030602/2026/7/17/4cff931f1b3c421cb64ff7abed332c50.shtml"
+  ]
+ ]
+}
   ]
 };
 
@@ -515,7 +643,7 @@ function renderFeed(){
   var voice=arr.filter(function(x){return x.type==='voice';});
   document.getElementById('feed-law').innerHTML=law.length?law.map(feedRow).join(''):'<div class="none-voice">暂无新立法动向。</div>';
   document.getElementById('feed-voice').innerHTML=voice.length?voice.map(feedRow).join(''):'<div class="none-voice">暂无新外界评价。</div>';
-  document.getElementById('feed-meta').textContent='自动检索流水 · 当前 '+arr.length+'/20 条（立法动向 '+law.length+' · 外界评价 '+voice.length+'）· 每日 06:00 更新 · 数据截至 '+window.TRACKER.stamp;
+  document.getElementById('feed-meta').textContent='1+9+扩展 自动检索流水 · 当前 '+arr.length+'/20 条（立法动向 '+law.length+' · 外界评价 '+voice.length+'）· 每日 06:00 更新 · 数据截至 '+window.TRACKER.stamp;
 }
 function liveStrip(key){
   var arr=feedSort(feedAll()).filter(function(f){return f.key===key;}).slice(0,4);
@@ -527,28 +655,30 @@ function liveStrip(key){
 
 
 /* 五步流程当前阶段：[众议院idx, 参议院idx]，-1=该院暂无版本/未启动 */
-const FLOW = {match:[2,1],chip:[2,1],overwatch:[2,1],rasa:[3,1],theft:[2,-1],noaa:[1,1],oss:[2,-1],papa:[1,-1],fapd:[1,-1]};
+const FLOW = {match:[2,1],chip:[2,1],overwatch:[2,1],rasa:[3,1],theft:[2,-1],noaa:[1,1],oss:[2,-1],papa:[1,-1],fapd:[1,-1],ruiran:[4,4]
+};
 window.TRACKER={stamp:"2026-09-17",feed:[
-  {id:"f2026091706051",ts:"2026-09-17 06:05",type:"law",key:"oss",title:"众院能源与商务委员会（E&C）9/16 全体委员会标记审议结束：<b>《开源人工智能领导法案》H.R.10152 以 26 票赞成、21 票反对获报出</b>（ordered reported），成为 9 部目标法案中<b>第三个走出委员会者</b>（前两家为 MATCH、Chip Security），并取得众院全院排期资格——此前本院同类涉华 AI 法案无一走到全体委员会表决。本轮同场 16 项法案全部报出，其中 12 项全票通过，4 项分歧明显（PACK Act 25-18、Recycled Materials 28-19、PROTECT USA 25-20、H.R.10152 26-21），该案为赞成票最少者之一；主席格思里称该批法案旨在确保美国“未来 250 年的全球领导地位”，提案人埃文斯（Gabe Evans, CO-08）在辩论中称“美国领导力不是可选项”，警告否则将“永远把阵地让给共产中国”。表决前委员会于 9/16 10:38（美东）挂出 H10152_ANS 修正案",src:["House Energy & Commerce 9/16","https://energycommerce.house.gov/posts/e-and-c-advances-16-bills-to-enhance-american-technological-development-and-strengthen-communications-networks"]},
-  {id:"f2026091706031",ts:"2026-09-17 06:03",type:"voice",key:"ndaa",title:"众院选前立法窗口 9/16 提前关闭：议长约翰逊取消原定 9/17 的表决、送议员进入<b>七周休会</b>（11/9 复会）——此前已砍掉 9 月最后两周会期，本会期累计取消至少 63 个表决日；同日 100 余名民主党众议员联署致函约翰逊，要求取消休会以先行表决 AI 安全立法（Liccardo 称“美国人民要的是行动而不是假期”），约翰逊回应“众院已完成工作”、主张 AI 企业“自我监管”，并称 AI 行政会议或于下周召集。E&C 主席格思里同日在 Politico Decoded 峰会上表示，Obernolte–Trahan 的 FRONTIER 法案“这么大的法案需要打磨”、委员会版本可能<b>要等到明年</b>（“我不愿在跛脚鸭期仓促行事而做不对”），Obernolte 则希望 11 月能表决。对 1+9 的含义：众院在选举前已无可用于推进 MATCH / Chip Security / AI OVERWATCH / RASA 等案的会期，FY2027 NDAA 与三部芯片法案的捆绑命运完全落入跛脚鸭期",src:["Politico / CBS News / UPI 9/16","https://www.politico.com/live-updates/2026/09/16/congress"]},
-  {id:"f2026091706011",ts:"2026-09-17 06:01",type:"voice",key:"rasa",title:"英国《金融时报》9/16 长文《美中在 AI 安全上难以找到共同点》（路透 9/15《AI 不是大国的垄断》、Business Times 9/16 同题呼应）：9/24 特朗普—习近平峰会前，中美智库与企业已通过非正式渠道接触，双方都担心先进 AI 系统“难以控制”，但在如何界定“护栏”上谈不拢——阿莫代 9/12 长文公开主张美方须先保住对华技术优势、支持限制中国获取先进芯片并打击“蒸馏”，被中方专家视为压缩了合作空间；清华大学人工智能国际治理研究院副院长肖茜称，中国专家本期待与美方同行共同管理前沿 AI 风险，近期美国辩论让合作空间“看起来更窄”。报道指两国风险优先级不同：美方聚焦 AI 失控与生存性风险，中方更集中于网络攻击、数据安全与内容风险；中国国家安全部近期就 AI 带来的网络攻击、数据窃取、政治不稳与军事冲突风险发布重要警示，有了解监管思路的人士称这可能是北京在峰会期间仍愿对话的信号。报道并强调，尽管双方 5 月已同意建立 AI 对话机制，<b>政府间正式 AI 会谈至今仍未启动</b>；参与非正式讨论者已向特朗普政府提议共建模型安全评估体系、恶意使用披露机制与异常行为预警直通渠道，但尚未见反响",src:["Financial Times / Reuters 9/16","https://www.ft.com/content/83023f2f-0c12-4239-bf27-99d8e378ec5d"]},
-  {id:"f2026091705591",ts:"2026-09-17 05:59",type:"voice",key:"theft",title:"复旦发展研究院全球人工智能创新治理中心 9/16 刊发姚旭、于玥长文《Anthropic 推动 AI“限速”为何招致巨大争议？》，把“蒸馏叙事”的争议落到学理与产业层面：其一，英伟达黄仁勋在 Axios 访谈中称“蒸馏——从 AI 学习、从他人学习……是智能的基础”，并反对美国因担忧中国模型而收紧开放生态；2026 年 7 月《开放权重与美国 AI 领导力》公开信获 270 多家企业与机构支持，<b>Anthropic 是唯一未签署的主要前沿实验室</b>；其二，宾夕法尼亚大学沃顿商学院教授凯文·韦巴赫（Kevin Werbach）指出美国现行法律没有把“工业规模蒸馏”列为独立违法事由、模型输出能否受知识产权保护亦无定论，直接禁止蒸馏会影响正常模型开发与评估；其三，Hugging Face CEO 德朗格称能力不行的模型“有没有蒸馏都不行”、停止蒸馏也不会让中国实验室退出竞争，并把头部实验室放大灾难性风险称为“末日营销”。文章另披露《The Information》9/14 报道：<b>英伟达、Palantir、博思艾伦等敏感行业企业正限制 Anthropic 模型的使用</b>——要求供应商提供新的数据安全保证，部分业务减少甚至停用，理由是担心供应商从客户知识产权中学习。文章结论是，Anthropic 把账号欺诈、合同违约与商业竞争一并装进“攻击”标签，意在把平台纠纷转化为出口管制与政府采购依据",src:["复旦发展研究院（全球人工智能创新治理中心）9/16","https://fddi.fudan.edu.cn/12/e7/c18965a791271/page.htm"]},
-  {id:"f2026091705571",ts:"2026-09-17 05:57",type:"voice",key:"oss",title:"开源 AI 路线之争同日升温：Computerworld 9/16 刊文《微软为何支持中国的开源 AI》——微软 CEO 纳德拉公开表态“开放权重模型是健康 AI 生态的必需”，称其“将强化美国竞争力、扩大经济机会，同时保护国家安全”，微软并与 200 多家企业联署开放权重文件；微软已在 Azure 上提供 DeepSeek，并在测试把 DeepSeek 接入 Copilot Cowork。文章指阵营已分明：Anthropic 与 OpenAI 主张在美国封禁中国开源 AI 并正游说，而微软、Meta、英伟达等认为两者可以共存；硅谷风投 Bill Gurley 对《纽约时报》概括为“一派想让 OpenAI 和 Anthropic 拥有一切，另一派是其他所有人，包括客户”。文章并预判短期内 OpenAI 与 Anthropic 或如愿以偿，但长期看中国轻量开源模型仍可能凭成本与生态扩张——这正是 H.R.10152 试图以“扶持美国合格开源模型 + 年度评估外国对手模型、禁止商务部封禁开源模型”回应的战场，该案已于 9/16 获众院 E&C 委员会报出",src:["Computerworld 9/16","https://www.computerworld.com/article/4221829/heres-why-microsoft-supports-open-source-chinese-ai.html"]},
-  {id:"f2026091609201",ts:"2026-09-16 09:20",type:"law",key:"ndaa",title:"congress.gov 官方记录：众院版 FY2027 NDAA（<b>H.R.8800</b>）于 <b>2026-09-14 由参议院正式接收</b>（Latest Action: Senate - 09/14/2026 Received in the Senate）——7/22 众院以 216-212 通过、规模约 1.15 万亿美元的该版本文本由此进入参院程序，为 7/22 以来该案首个新的官方记录动作；参院仍在推进自有版本 S.4784（7/14 cloture 50-46 失败、7/20-27 多次动议未成），二次 cloture 未排期，伊朗战争授权僵局与会前协商仍是前置障碍",src:["Congress.gov · H.R.8800 Actions","https://www.congress.gov/bill/119th-congress/house-bill/8800/actions"]},
-  {id:"f2026091609151",ts:"2026-09-16 09:15",type:"voice",key:"rasa",title:"Export Compliance Daily 9/15：美国律师协会（ABA）出口管制与 AI 研讨会上，Wardlaw Trade Law 创始人 Lindsay Wardlaw 称企业“非常担心”BIS 将如何管制外国企业对先进芯片的远程访问（含云端）——BIS 无需走正式规则制定，只要撤销十余年前认定“云服务与远程访问不受 EAR 管辖”的咨询意见、代之以更细致的“出口”定义，即可实现同等甚至更硬的转变，且 BIS 新规极少给业界预警期；乔治城大学安全与新兴技术中心（CSET）高级研究分析师 Hanna Dohmen 则直言《远程访问安全法案》（RASA）“看起来已经停滞”——参院既未表决、也未将其列入参院版 NDAA 经理修正案，“今年不太可能通过”；但她强调行政端未停：BIS 正积极考虑阻止中资企业从亚洲数据中心租用先进算力，“国会不动，BIS 可能先动”",src:["Export Compliance Daily","https://exportcompliancedaily.com/article/2026/09/15/bis-could-control-remote-access-to-chips-without-traditional-rulemaking-lawyer-says-2609140057"]},
-  {id:"f2026091609001",ts:"2026-09-16 09:00",type:"voice",key:"ndaa",title:"CQ Roll Call / FiscalNote 9/14 秋季立法前瞻：参院复会后的议事优先序是加密市场结构法案（CLARITY Act，9/15 程序性投票）、大学体育姓名与肖像（NIL）法案与能源许可改革，NDAA 未进入近期全院排期——两党仍未就“伊朗战争修正案”妥协（Duckworth 以反对票相挟），参院军委会主席 Wicker 称舒默的阻拦“创下新低”，Rounds 预计法案要等到 11 月选举后才会拼拢；叠加 9/2 已签署的 CR 把联邦资金推至 12/11，FY2027 NDAA 事实上被并入跛脚鸭议程，MATCH / Chip Security / AI OVERWATCH 三部芯片法案的捆绑命运随之延后",src:["CQ Roll Call / FiscalNote","https://fiscalnote.com/webinars/fall-2026-legislative-preview"]},
-  {id:"f2026091509201",ts:"2026-09-15 09:20",type:"law",key:"oss",title:"众院能源与商务委员会（E&C）主席格思里（Brett Guthrie）9/14 宣布：<b>9/16（周三）10:00（美东）</b>在雷伯恩大楼 2123 室举行全体委员会标记审议（markup），共 16 项“促进美国技术发展、强化通信网络”法案，《开源人工智能领导法案》H.R.10152 在列——同场含 H.R.6207 芯片设备质量适用性与完整性保护法案（Chip EQUIP Act）、H.R.10170 存储芯片竞争力评估法案、H.R.10163 美国量子竞争力法案、H.R.9385 PROTECT USA Act 等；法案文本、标记审议备忘录与通知已于 9/14 17:24（美东）挂上 congress.gov 会议页 119573，标记审议开放公众与媒体并全程网络直播。H.R.10152 由此从小组委阶段进入全体委员会实质排期，通过后将取得众院全院排期资格",src:["House Energy & Commerce / Congress.gov","https://energycommerce.house.gov/posts/chairman-guthrie-announces-full-committee-markup-of-16-bills-september-2026"]},
-  {id:"f2026091507301",ts:"2026-09-15 07:30",type:"voice",key:"match",title:"Export Compliance Daily 9/15：参院少数党领袖舒默（Chuck Schumer）9/14 要求特朗普政府向全体参议员提供机密简报，说明其如何运用包括芯片相关出口管制在内的工具应对 AI 风险，新闻稿明确要求政府交代“正在做什么来阻止先进 AI 芯片、半导体制造设备及其他关键美国技术流向中国、加速北京 AI 雄心”，并涵盖抵御“日益复杂、AI 赋能的网络攻击”，白宫未立即置评（舒默去年 12 月曾与其他 6 名民主党参议员就放行 H200 致函商务部）；同日参院银行委国家安全与国际金融贸易小组委首席民主党人安迪·金（Andy Kim）呼吁参院“重新夺回对 AI 的控制权”，点名要求通过 MATCH 法案与 BLADE 法案（后者授权行政部门对窃取美国 AI 模型的外国实体实施出口管制与金融制裁），金为两案原始联署人",src:["Export Compliance Daily","https://exportcompliancedaily.com/article/2026/09/15/senates-top-democrat-seeks-administration-briefing-on-ai-efforts-including-export-controls-2609140004"]},
-  {id:"f2026091422001",ts:"2026-09-14 22:00",type:"voice",key:"theft",title:"《环球时报》9/14 刊出报道（人民网英文版 9/14 同日转发）：统计 Anthropic CEO 阿莫代 9/12 长文提及中国达 12 次，引述电信与科技政策观察家项立刚称其言论“不当、敌对、无据”且自相矛盾（既承认最终需与中国合作才能放慢 AI 发展，又主张以芯片、算力、模型限制拉大美国技术优势）；引述中科院深圳先进技术研究院具身智能中心主任刘少山（曾与阿莫代共事）称该文把 AI 安全、国家安全、产业竞争与商业利益混为一谈，短期内科技企业有强烈动机把 AI 描述得比实际更强大、更危险；引述清华大学国际人工智能治理研究院副院长肖茜称 Anthropic 面临中国开源模型快速追赶压力，遂主张进一步限制中国获取美国模型与技术以护自身竞争优势。同期中国外交部批该文为“散布恐惧（fear-mongering）”。另据 Politico 9/14 披露，众议员 Harrigan 正起草《NIST 防御性标准法案》，要求 NIST 与 AI 企业共建“防御蒸馏攻击”的自愿性最佳实践——蒸馏议题正被写入更多立法文本",src:["环球时报 / 人民网英文版","https://en.people.cn/n3/2026/0914/c90000-20499369.html"]},
-  {id:"f2026091420301",ts:"2026-09-14 20:30",type:"voice",key:"ndaa",title:"Politico 9/14 国会日程观察《国会不为 AI 警报紧急行动》：周末美国最强 AI 企业高管集体认为行业需放慢节奏，但数周内国会快速立法概率“接近于零”。障碍一是中期选举前会期极紧——议员周一返会，但众院计划周五（9/18）前休会，参院已在考虑把三周会期压缩为两周；障碍二是缺乏共识方案——参院商务委本月或就 AI 立法举行标记审议，但多数党领袖 Thune 与 Klobuchar 主推的两党 AI 安全法案能否定稿仍不确定，参议员在“如何让 AI 实验室承担法律责任”上谈不拢。众议长约翰逊在 CNN 访谈中给国会快速立法“泼冷水”，称行业安全规范应由科技公司自己负责、建议议员与特朗普及科技高管“关起门来把事情理清”；Jeffries 称 AI 为党团高优先议题但未提方案；舒默声明同样缺细节、要求对华断供先进 AI 芯片与半导体技术并作全体参议员机密简报。两党基层压力上升：Trahan 要求议员留会、其“AI 紧急刹车”法案为唯一已备妥可走委员会的综合案；即将退休的 Chip Roy 亦警告需设护栏。另：众院共和党领袖 9/15 拟把限制数据中心成本法案推上全院表决（至少 5 名共和党前线议员 9/1 后加入联署）",src:["Politico","https://www.politico.com/live-updates/2026/09/14/congress/what-were-watching-01074046"]},
-  {id:"f2026091418001",ts:"2026-09-14 18:00",type:"voice",key:"oss",title:"开源 AI 赛道的中方制度对冲与外部评价（9/13–9/14）：习近平 9/13 在新德里金砖国家领导人第十八次会晤第二阶段会议提出“人工智能开源普惠倡议”，宣布中方将率先建设金砖国家人工智能开源专区、支持大语言模型开发与应用合作、开展 AI 专题研修培训、构建人工智能开放生态（央广网 9/14、新华社 9/14；外交部郭嘉昆 9/14 确认中国明年接任金砖主席国并主办第十九次会晤）；人民网英文版 9/14 引 Hugging Face CEO 德朗格（Clément Delangue）对 CNBC 称，中国正凭开放权重模型赢得 AI 竞赛、最快今年就可能追上美国模型厂商，而美国厂商在“各自为战”；清华大学肖茜对《环球时报》称美国闭源厂商在开源赛道承压——上述动态正构成本周 H.R.10152 全体委员会标记审议的背景",src:["央广网 / 新华社 / 人民网英文版","https://www.cnr.cn/china/news/sz/20260914/t20260914_527813544.shtml"]},
-  {id:"f2026091400561",ts:"2026-09-14 00:56",type:"voice",key:"ndaa",title:"Forkast 9/13 转述 Inside AI Policy 报道：智库“美国人负责任创新”（ARI）致函参众两院军委会，要求 FY2027 NDAA 纳入更强硬的 AI 相关出口管制语言、保留 AI OVERWATCH / Chip Security / MATCH 三法案——理由为俄罗斯仍经土耳其、阿联酋、亚美尼亚、哈萨克斯坦、泰国空壳网络获取先进 AI 芯片，而 BIS 追查仍靠人工检索与 Excel、缺乏知识图谱能力，商务部自 2025 年 10 月以来未新增中国实体（十多年来最长空窗）；ARI 会长 Brad Carson 称三部法案将给联邦政府“必要的工具”；报道并点出 NDAA 另一争点是是否保留 ECRA 罚款加重条款（H.R.5853：民事罚款上限由交易额 2 倍提至 4 倍、上限由 30 万美元提至 120 万美元），FY2027 自 10/1 起算、NDAA 会前协商是决定性场合",src:["Forkast / Inside AI Policy","https://forkast.news/ari-pushes-congress-for-stricter-ai-chip-export-controls-in-defense-bill"]},
-  {id:"f2026091322351",ts:"2026-09-13 22:35",type:"voice",key:"overwatch",title:"Anthropic CEO 阿莫代（Dario Amodei）9/12 发布长文《We Must Pace the Frontier》，呼吁全行业放慢前沿模型能力提升节奏（三步方案：Anthropic 先行给予第三方评估机构“类员工级”永久访问权、行业与民主国家共建安全标准与进度上限、与威权国家有条件协调），获 OpenAI CEO 奥特曼与马斯克公开附和；同日该公司公共政策负责人赫克（Sarah Heck）发帖响应，直接呼吁国会“阻止向中国等对手国家出售最先进芯片”、通过要求前沿模型强制测试的国家立法并赋予政府叫停不安全模型的权力，点名致谢参院多数党领袖 Thune、Cruz 主席、Klobuchar 与众议员 Obernolte、Trahan；阿莫代文中明确支持对芯片与半导体制造设备的出口限制、打击未授权蒸馏、防止模型权重被窃（Washington Examiner 9/12、MS NOW 9/13、The Hill 9/12）",src:["Washington Examiner / MS NOW","https://www.washingtonexaminer.com/policy/technology/4725070/ai-giants-amodei-essay"]},
-  {id:"f2026091317131",ts:"2026-09-13 17:13",type:"voice",key:"theft",title:"环球时报快评《瞄准中国 AI！美国“科技右翼”端出冷战剧本》（英文版 Global Times 9/13 同刊）：直指阿莫代 9/12 长文表面倡导 AI 行业“反内卷”、实为披着全球 AI 安全外衣的“AI 冷战剧本”，点出其中三大对华遏制措施——严禁向中国出售高性能 AI 芯片与半导体制造设备、打击所谓模型“蒸馏”、防止大模型核心权重被窃或经黑客外泄；文章称其真实目的是以技术壁垒与规则垄断护持华盛顿在前沿科技的垄断霸权、将中国排除在全球 AI 治理体系之外，与“硅和平”（Pax Silica）倡议一脉相承；指中国是全球 AI 生态中体量最大、开放程度最高的供给方之一，强行割裂产业链只会抬高全球试错成本",src:["环球时报（英文版 Global Times）","https://www.globaltimes.cn/page/202609/1370436.shtml"]},
-  {id:"f2026091311001",ts:"2026-09-13 11:00",type:"voice",key:"rasa",title:"南华早报 9/12-9/13：美中正磋商把原定独立的政府间 AI 对话并入财长贝森特与副总理何立峰主导的更高层级经贸会议、在 9/24“习特会”前后一并讨论；双方或议贸易委员会、投资委员会与人工智能工作小组，目前仅贸易委员会有望在峰会前取得具体成果，AI 对话因议题广泛、立场分歧而成果预期有限。报道指若单设 AI 对话，焦点可能从“降低风险”转向半导体管制、模型访问与出口管制等争议；中方不满美方推动方式，认为其意在限制中国自身 AI 能力；讨论范围含半导体管制、模型蒸馏与知识产权、安全规范、网络安全及军事限制。另：中国驻美使馆发言人刘畅（Liu Chang）回应贝森特“蒸馏”言论，称其为“对中国 AI 产业发展与进步的蓄意攻击”，敦促美方停止对华科技遏制（The Star / SCMP 9/13）",src:["南华早报 / The Star","https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/13/china-can-never-get-ahead-of-us-in-ai-bessent-says-in-advance-of-xis-visit"]},
-  {id:"f2026091312001",ts:"2026-09-12 12:00",type:"voice",key:"theft",title:"Anthropic 9/10 发布 154 页威胁情报报告《Detecting and countering misuse of AI: September 2026》（Tech Times 9/12 跟进）：认定 5—7 月七家中国机构对 Claude 实施“非法蒸馏”，可量化交互合计约 1.899 亿次（较 2 月披露的约 1600 万次增约 12 倍），并首次以企业编号逐一列名——阿里/通义千问 GTG-16005（逾 1.51 亿次、3500+ 虚假账号、单日峰值近 300 万次，以固定提示词强制输出思维链、针对 Opus 4.6/4.7 推理轨迹用于蒸馏 Qwen 3.5/3.6/3.7）、月之暗面 GTG-16002（逾 2300 万次、5380 假账号，跨会话“思维签名”回放绕过防护，并将约 30 万条真实客户请求中转给 Claude）、DeepSeek GTG-16001（7 月 14 天内 1210 万次）、智谱 GTG-16006（340 万次/273 账号）、小米 GTG-16008（40 万次）、MiniMax GTG-16003（借空壳公司搭第三方模型聚合代理）、商汤 GTG-16012（向第三方数据商购买对话转写）；月之暗面与 DeepSeek 的中转会话含数百人姓名、邮箱与企业资料（十余种语言，部分 IP 疑与中方军方相关）。同期报道指 H.R.8283 文本仍待众院全体审议、参院无配套，ITIF 7 月批评其“模型提取”定义过度依赖用户协议恐误伤合法研究，Hagerty 与 Kim 参议员筹备的 NDAA 制裁修正案亦未落地",src:["Tech Times / Anthropic","https://www.techtimes.com/articles/327391/20260912/chinese-ai-labs-extracted-190m-claude-exchanges-export-controls-failed.htm"]},
-  {id:"f2026091312002",ts:"2026-09-12 08:00",type:"voice",key:"theft",title:"光明网时政频道“认知工作室”刊发北京理工大学法学院教授、科技人权研究中心执行主任肖君拥评论《中国AI企业之“罪”，不在蒸馏，而在进步》（人民网同期刊载）：以美国判例中的“实质性非侵权用途”规则论证技术中立——法律评价对象是使用技术的行为而非技术本身，中方使用蒸馏在法理上无可指摘；指模型输出的训练边界国际规则尚未形成、须各方对话共商，不能由一国单方面定性并以国内标准凌驾国际共识；指蒸馏已成行业惯例且用得最多者恰是美国企业，美方以网络安全之名行双重标准之实，实质是动用国家力量维护科技霸权与算力垄断",src:["光明网（人民网同刊）","https://politics.gmw.cn/2026-09/12/content_38997802.htm"]},
-  {id:"f2026091206001",ts:"2026-09-11 22:00",type:"voice",key:"theft",title:"中国新闻网 9/11 刊发中国政法大学人工智能法研究院院长张凌寒署名文章《拒绝技术独占 模型排他 推动人工智能公平普惠发展》，从法理层面系统反驳美方“反蒸馏”叙事与 H.R.8283 的立法逻辑：美国《2016 年保护商业秘密法》（DTSA）明确将“反向工程、独立推导及其他合法取得方式”排除在不正当手段之外，美国版权局 2025 年 1 月报告亦认定纯 AI 生成材料不受版权保护，教师模型输出难以构成受保护客体；“模型能力排他权”不经新颖性/创造性审查、不以公开技术方案为对价、无明确保护期限，却能产生专利式排他效果，突破专利法与商业秘密法的法治平衡；文章援引黄仁勋“人类知识传承本就是一场永无止境的互相蒸馏”与马斯克承认 xAI 蒸馏 OpenAI 训练 Grok，佐证蒸馏属行业通行做法",src:["中国新闻网（中新社）","https://m.chinanews.com/wap/detail/cht/zw/10695028.shtml"]},
+{id:"f2026091709001",ts:"2026-09-17 09:00",type:"voice",key:"ruiran",title:"外界评价：CSIS 称法案“最重要的新增授权”是对俄能源第三国买家最高 100% 关税；印媒聚焦印度首当其冲（7 月俄油占其进口逾半）；Hoyer–Kaptur 点名含中国在内 10 国的修正案被众院规则委员会 3-7 否决",src:["中新网 · The Hindu · Moneycontrol","https://www.thehindu.com/news/international/us-house-russia-sanctions-bill-india-tariffs/article71474350.ece"]},
+{id:"f2026091706051",ts:"2026-09-17 06:05",type:"law",key:"oss",title:"众院能源与商务委员会（E&C）9/16 全体委员会标记审议结束：<b>《开源人工智能领导法案》H.R.10152 以 26 票赞成、21 票反对获报出</b>（ordered reported），成为 9 部目标法案中<b>第三个走出委员会者</b>（前两家为 MATCH、Chip Security），并取得众院全院排期资格——此前本院同类涉华 AI 法案无一走到全体委员会表决。本轮同场 16 项法案全部报出，其中 12 项全票通过，4 项分歧明显（PACK Act 25-18、Recycled Materials 28-19、PROTECT USA 25-20、H.R.10152 26-21），该案为赞成票最少者之一；主席格思里称该批法案旨在确保美国“未来 250 年的全球领导地位”，提案人埃文斯（Gabe Evans, CO-08）在辩论中称“美国领导力不是可选项”，警告否则将“永远把阵地让给共产中国”。表决前委员会于 9/16 10:38（美东）挂出 H10152_ANS 修正案",src:["House Energy & Commerce 9/16","https://energycommerce.house.gov/posts/e-and-c-advances-16-bills-to-enhance-american-technological-development-and-strengthen-communications-networks"]},
+{id:"f2026091706031",ts:"2026-09-17 06:03",type:"voice",key:"ndaa",title:"众院选前立法窗口 9/16 提前关闭：议长约翰逊取消原定 9/17 的表决、送议员进入<b>七周休会</b>（11/9 复会）——此前已砍掉 9 月最后两周会期，本会期累计取消至少 63 个表决日；同日 100 余名民主党众议员联署致函约翰逊，要求取消休会以先行表决 AI 安全立法（Liccardo 称“美国人民要的是行动而不是假期”），约翰逊回应“众院已完成工作”、主张 AI 企业“自我监管”，并称 AI 行政会议或于下周召集。E&C 主席格思里同日在 Politico Decoded 峰会上表示，Obernolte–Trahan 的 FRONTIER 法案“这么大的法案需要打磨”、委员会版本可能<b>要等到明年</b>（“我不愿在跛脚鸭期仓促行事而做不对”），Obernolte 则希望 11 月能表决。对 1+9 的含义：众院在选举前已无可用于推进 MATCH / Chip Security / AI OVERWATCH / RASA 等案的会期，FY2027 NDAA 与三部芯片法案的捆绑命运完全落入跛脚鸭期",src:["Politico / CBS News / UPI 9/16","https://www.politico.com/live-updates/2026/09/16/congress"]},
+{id:"f2026091706011",ts:"2026-09-17 06:01",type:"voice",key:"rasa",title:"英国《金融时报》9/16 长文《美中在 AI 安全上难以找到共同点》（路透 9/15《AI 不是大国的垄断》、Business Times 9/16 同题呼应）：9/24 特朗普—习近平峰会前，中美智库与企业已通过非正式渠道接触，双方都担心先进 AI 系统“难以控制”，但在如何界定“护栏”上谈不拢——阿莫代 9/12 长文公开主张美方须先保住对华技术优势、支持限制中国获取先进芯片并打击“蒸馏”，被中方专家视为压缩了合作空间；清华大学人工智能国际治理研究院副院长肖茜称，中国专家本期待与美方同行共同管理前沿 AI 风险，近期美国辩论让合作空间“看起来更窄”。报道指两国风险优先级不同：美方聚焦 AI 失控与生存性风险，中方更集中于网络攻击、数据安全与内容风险；中国国家安全部近期就 AI 带来的网络攻击、数据窃取、政治不稳与军事冲突风险发布重要警示，有了解监管思路的人士称这可能是北京在峰会期间仍愿对话的信号。报道并强调，尽管双方 5 月已同意建立 AI 对话机制，<b>政府间正式 AI 会谈至今仍未启动</b>；参与非正式讨论者已向特朗普政府提议共建模型安全评估体系、恶意使用披露机制与异常行为预警直通渠道，但尚未见反响",src:["Financial Times / Reuters 9/16","https://www.ft.com/content/83023f2f-0c12-4239-bf27-99d8e378ec5d"]},
+{id:"f2026091705591",ts:"2026-09-17 05:59",type:"voice",key:"theft",title:"复旦发展研究院全球人工智能创新治理中心 9/16 刊发姚旭、于玥长文《Anthropic 推动 AI“限速”为何招致巨大争议？》，把“蒸馏叙事”的争议落到学理与产业层面：其一，英伟达黄仁勋在 Axios 访谈中称“蒸馏——从 AI 学习、从他人学习……是智能的基础”，并反对美国因担忧中国模型而收紧开放生态；2026 年 7 月《开放权重与美国 AI 领导力》公开信获 270 多家企业与机构支持，<b>Anthropic 是唯一未签署的主要前沿实验室</b>；其二，宾夕法尼亚大学沃顿商学院教授凯文·韦巴赫（Kevin Werbach）指出美国现行法律没有把“工业规模蒸馏”列为独立违法事由、模型输出能否受知识产权保护亦无定论，直接禁止蒸馏会影响正常模型开发与评估；其三，Hugging Face CEO 德朗格称能力不行的模型“有没有蒸馏都不行”、停止蒸馏也不会让中国实验室退出竞争，并把头部实验室放大灾难性风险称为“末日营销”。文章另披露《The Information》9/14 报道：<b>英伟达、Palantir、博思艾伦等敏感行业企业正限制 Anthropic 模型的使用</b>——要求供应商提供新的数据安全保证，部分业务减少甚至停用，理由是担心供应商从客户知识产权中学习。文章结论是，Anthropic 把账号欺诈、合同违约与商业竞争一并装进“攻击”标签，意在把平台纠纷转化为出口管制与政府采购依据",src:["复旦发展研究院（全球人工智能创新治理中心）9/16","https://fddi.fudan.edu.cn/12/e7/c18965a791271/page.htm"]},
+{id:"f2026091705571",ts:"2026-09-17 05:57",type:"voice",key:"oss",title:"开源 AI 路线之争同日升温：Computerworld 9/16 刊文《微软为何支持中国的开源 AI》——微软 CEO 纳德拉公开表态“开放权重模型是健康 AI 生态的必需”，称其“将强化美国竞争力、扩大经济机会，同时保护国家安全”，微软并与 200 多家企业联署开放权重文件；微软已在 Azure 上提供 DeepSeek，并在测试把 DeepSeek 接入 Copilot Cowork。文章指阵营已分明：Anthropic 与 OpenAI 主张在美国封禁中国开源 AI 并正游说，而微软、Meta、英伟达等认为两者可以共存；硅谷风投 Bill Gurley 对《纽约时报》概括为“一派想让 OpenAI 和 Anthropic 拥有一切，另一派是其他所有人，包括客户”。文章并预判短期内 OpenAI 与 Anthropic 或如愿以偿，但长期看中国轻量开源模型仍可能凭成本与生态扩张——这正是 H.R.10152 试图以“扶持美国合格开源模型 + 年度评估外国对手模型、禁止商务部封禁开源模型”回应的战场，该案已于 9/16 获众院 E&C 委员会报出",src:["Computerworld 9/16","https://www.computerworld.com/article/4221829/heres-why-microsoft-supports-open-source-chinese-ai.html"]},
+{id:"f2026091622001",ts:"2026-09-16 22:00",type:"law",key:"ruiran",title:"众院 262-159 通过《林赛·O·格雷厄姆制裁俄罗斯与伊朗法案》(H.R.5334) 参院修正版，送交总统签署；参院 8/7 已以 86-11 通过。法案授权总统对俄油气前五大买家与协助规避制裁前五国加征最高 100% 关税",src:["Congress.gov","https://www.congress.gov/bill/119th-congress/house-bill/5334"]},
+{id:"f2026091609201",ts:"2026-09-16 09:20",type:"law",key:"ndaa",title:"congress.gov 官方记录：众院版 FY2027 NDAA（<b>H.R.8800</b>）于 <b>2026-09-14 由参议院正式接收</b>（Latest Action: Senate - 09/14/2026 Received in the Senate）——7/22 众院以 216-212 通过、规模约 1.15 万亿美元的该版本文本由此进入参院程序，为 7/22 以来该案首个新的官方记录动作；参院仍在推进自有版本 S.4784（7/14 cloture 50-46 失败、7/20-27 多次动议未成），二次 cloture 未排期，伊朗战争授权僵局与会前协商仍是前置障碍",src:["Congress.gov · H.R.8800 Actions","https://www.congress.gov/bill/119th-congress/house-bill/8800/actions"]},
+{id:"f2026091609151",ts:"2026-09-16 09:15",type:"voice",key:"rasa",title:"Export Compliance Daily 9/15：美国律师协会（ABA）出口管制与 AI 研讨会上，Wardlaw Trade Law 创始人 Lindsay Wardlaw 称企业“非常担心”BIS 将如何管制外国企业对先进芯片的远程访问（含云端）——BIS 无需走正式规则制定，只要撤销十余年前认定“云服务与远程访问不受 EAR 管辖”的咨询意见、代之以更细致的“出口”定义，即可实现同等甚至更硬的转变，且 BIS 新规极少给业界预警期；乔治城大学安全与新兴技术中心（CSET）高级研究分析师 Hanna Dohmen 则直言《远程访问安全法案》（RASA）“看起来已经停滞”——参院既未表决、也未将其列入参院版 NDAA 经理修正案，“今年不太可能通过”；但她强调行政端未停：BIS 正积极考虑阻止中资企业从亚洲数据中心租用先进算力，“国会不动，BIS 可能先动”",src:["Export Compliance Daily","https://exportcompliancedaily.com/article/2026/09/15/bis-could-control-remote-access-to-chips-without-traditional-rulemaking-lawyer-says-2609140057"]},
+{id:"f2026091609001",ts:"2026-09-16 09:00",type:"voice",key:"ndaa",title:"CQ Roll Call / FiscalNote 9/14 秋季立法前瞻：参院复会后的议事优先序是加密市场结构法案（CLARITY Act，9/15 程序性投票）、大学体育姓名与肖像（NIL）法案与能源许可改革，NDAA 未进入近期全院排期——两党仍未就“伊朗战争修正案”妥协（Duckworth 以反对票相挟），参院军委会主席 Wicker 称舒默的阻拦“创下新低”，Rounds 预计法案要等到 11 月选举后才会拼拢；叠加 9/2 已签署的 CR 把联邦资金推至 12/11，FY2027 NDAA 事实上被并入跛脚鸭议程，MATCH / Chip Security / AI OVERWATCH 三部芯片法案的捆绑命运随之延后",src:["CQ Roll Call / FiscalNote","https://fiscalnote.com/webinars/fall-2026-legislative-preview"]},
+{id:"f2026091515001",ts:"2026-09-15 15:00",type:"voice",key:"ruiran",title:"商务部新闻发言人答记者问：美方意图胁迫以进口俄油为由对华加征“次级关税”，是典型的单边霸凌和经济胁迫，严重违反两国元首通话共识，中方坚决反对并将采取一切必要措施（外交部 7/15 已作同类表态）",src:["外交部/商务部（四川省商务厅周报）","https://swt.sc.gov.cn/sccom/c25030602/2026/7/17/4cff931f1b3c421cb64ff7abed332c50.shtml"]},
+{id:"f2026091509201",ts:"2026-09-15 09:20",type:"law",key:"oss",title:"众院能源与商务委员会（E&C）主席格思里（Brett Guthrie）9/14 宣布：<b>9/16（周三）10:00（美东）</b>在雷伯恩大楼 2123 室举行全体委员会标记审议（markup），共 16 项“促进美国技术发展、强化通信网络”法案，《开源人工智能领导法案》H.R.10152 在列——同场含 H.R.6207 芯片设备质量适用性与完整性保护法案（Chip EQUIP Act）、H.R.10170 存储芯片竞争力评估法案、H.R.10163 美国量子竞争力法案、H.R.9385 PROTECT USA Act 等；法案文本、标记审议备忘录与通知已于 9/14 17:24（美东）挂上 congress.gov 会议页 119573，标记审议开放公众与媒体并全程网络直播。H.R.10152 由此从小组委阶段进入全体委员会实质排期，通过后将取得众院全院排期资格",src:["House Energy & Commerce / Congress.gov","https://energycommerce.house.gov/posts/chairman-guthrie-announces-full-committee-markup-of-16-bills-september-2026"]},
+{id:"f2026091507301",ts:"2026-09-15 07:30",type:"voice",key:"match",title:"Export Compliance Daily 9/15：参院少数党领袖舒默（Chuck Schumer）9/14 要求特朗普政府向全体参议员提供机密简报，说明其如何运用包括芯片相关出口管制在内的工具应对 AI 风险，新闻稿明确要求政府交代“正在做什么来阻止先进 AI 芯片、半导体制造设备及其他关键美国技术流向中国、加速北京 AI 雄心”，并涵盖抵御“日益复杂、AI 赋能的网络攻击”，白宫未立即置评（舒默去年 12 月曾与其他 6 名民主党参议员就放行 H200 致函商务部）；同日参院银行委国家安全与国际金融贸易小组委首席民主党人安迪·金（Andy Kim）呼吁参院“重新夺回对 AI 的控制权”，点名要求通过 MATCH 法案与 BLADE 法案（后者授权行政部门对窃取美国 AI 模型的外国实体实施出口管制与金融制裁），金为两案原始联署人",src:["Export Compliance Daily","https://exportcompliancedaily.com/article/2026/09/15/senates-top-democrat-seeks-administration-briefing-on-ai-efforts-including-export-controls-2609140004"]},
+{id:"f2026091422001",ts:"2026-09-14 22:00",type:"voice",key:"theft",title:"《环球时报》9/14 刊出报道（人民网英文版 9/14 同日转发）：统计 Anthropic CEO 阿莫代 9/12 长文提及中国达 12 次，引述电信与科技政策观察家项立刚称其言论“不当、敌对、无据”且自相矛盾（既承认最终需与中国合作才能放慢 AI 发展，又主张以芯片、算力、模型限制拉大美国技术优势）；引述中科院深圳先进技术研究院具身智能中心主任刘少山（曾与阿莫代共事）称该文把 AI 安全、国家安全、产业竞争与商业利益混为一谈，短期内科技企业有强烈动机把 AI 描述得比实际更强大、更危险；引述清华大学国际人工智能治理研究院副院长肖茜称 Anthropic 面临中国开源模型快速追赶压力，遂主张进一步限制中国获取美国模型与技术以护自身竞争优势。同期中国外交部批该文为“散布恐惧（fear-mongering）”。另据 Politico 9/14 披露，众议员 Harrigan 正起草《NIST 防御性标准法案》，要求 NIST 与 AI 企业共建“防御蒸馏攻击”的自愿性最佳实践——蒸馏议题正被写入更多立法文本",src:["环球时报 / 人民网英文版","https://en.people.cn/n3/2026/0914/c90000-20499369.html"]},
+{id:"f2026091420301",ts:"2026-09-14 20:30",type:"voice",key:"ndaa",title:"Politico 9/14 国会日程观察《国会不为 AI 警报紧急行动》：周末美国最强 AI 企业高管集体认为行业需放慢节奏，但数周内国会快速立法概率“接近于零”。障碍一是中期选举前会期极紧——议员周一返会，但众院计划周五（9/18）前休会，参院已在考虑把三周会期压缩为两周；障碍二是缺乏共识方案——参院商务委本月或就 AI 立法举行标记审议，但多数党领袖 Thune 与 Klobuchar 主推的两党 AI 安全法案能否定稿仍不确定，参议员在“如何让 AI 实验室承担法律责任”上谈不拢。众议长约翰逊在 CNN 访谈中给国会快速立法“泼冷水”，称行业安全规范应由科技公司自己负责、建议议员与特朗普及科技高管“关起门来把事情理清”；Jeffries 称 AI 为党团高优先议题但未提方案；舒默声明同样缺细节、要求对华断供先进 AI 芯片与半导体技术并作全体参议员机密简报。两党基层压力上升：Trahan 要求议员留会、其“AI 紧急刹车”法案为唯一已备妥可走委员会的综合案；即将退休的 Chip Roy 亦警告需设护栏。另：众院共和党领袖 9/15 拟把限制数据中心成本法案推上全院表决（至少 5 名共和党前线议员 9/1 后加入联署）",src:["Politico","https://www.politico.com/live-updates/2026/09/14/congress/what-were-watching-01074046"]},
+{id:"f2026091418001",ts:"2026-09-14 18:00",type:"voice",key:"oss",title:"开源 AI 赛道的中方制度对冲与外部评价（9/13–9/14）：习近平 9/13 在新德里金砖国家领导人第十八次会晤第二阶段会议提出“人工智能开源普惠倡议”，宣布中方将率先建设金砖国家人工智能开源专区、支持大语言模型开发与应用合作、开展 AI 专题研修培训、构建人工智能开放生态（央广网 9/14、新华社 9/14；外交部郭嘉昆 9/14 确认中国明年接任金砖主席国并主办第十九次会晤）；人民网英文版 9/14 引 Hugging Face CEO 德朗格（Clément Delangue）对 CNBC 称，中国正凭开放权重模型赢得 AI 竞赛、最快今年就可能追上美国模型厂商，而美国厂商在“各自为战”；清华大学肖茜对《环球时报》称美国闭源厂商在开源赛道承压——上述动态正构成本周 H.R.10152 全体委员会标记审议的背景",src:["央广网 / 新华社 / 人民网英文版","https://www.cnr.cn/china/news/sz/20260914/t20260914_527813544.shtml"]},
+{id:"f2026091400561",ts:"2026-09-14 00:56",type:"voice",key:"ndaa",title:"Forkast 9/13 转述 Inside AI Policy 报道：智库“美国人负责任创新”（ARI）致函参众两院军委会，要求 FY2027 NDAA 纳入更强硬的 AI 相关出口管制语言、保留 AI OVERWATCH / Chip Security / MATCH 三法案——理由为俄罗斯仍经土耳其、阿联酋、亚美尼亚、哈萨克斯坦、泰国空壳网络获取先进 AI 芯片，而 BIS 追查仍靠人工检索与 Excel、缺乏知识图谱能力，商务部自 2025 年 10 月以来未新增中国实体（十多年来最长空窗）；ARI 会长 Brad Carson 称三部法案将给联邦政府“必要的工具”；报道并点出 NDAA 另一争点是是否保留 ECRA 罚款加重条款（H.R.5853：民事罚款上限由交易额 2 倍提至 4 倍、上限由 30 万美元提至 120 万美元），FY2027 自 10/1 起算、NDAA 会前协商是决定性场合",src:["Forkast / Inside AI Policy","https://forkast.news/ari-pushes-congress-for-stricter-ai-chip-export-controls-in-defense-bill"]},
+{id:"f2026091322351",ts:"2026-09-13 22:35",type:"voice",key:"overwatch",title:"Anthropic CEO 阿莫代（Dario Amodei）9/12 发布长文《We Must Pace the Frontier》，呼吁全行业放慢前沿模型能力提升节奏（三步方案：Anthropic 先行给予第三方评估机构“类员工级”永久访问权、行业与民主国家共建安全标准与进度上限、与威权国家有条件协调），获 OpenAI CEO 奥特曼与马斯克公开附和；同日该公司公共政策负责人赫克（Sarah Heck）发帖响应，直接呼吁国会“阻止向中国等对手国家出售最先进芯片”、通过要求前沿模型强制测试的国家立法并赋予政府叫停不安全模型的权力，点名致谢参院多数党领袖 Thune、Cruz 主席、Klobuchar 与众议员 Obernolte、Trahan；阿莫代文中明确支持对芯片与半导体制造设备的出口限制、打击未授权蒸馏、防止模型权重被窃（Washington Examiner 9/12、MS NOW 9/13、The Hill 9/12）",src:["Washington Examiner / MS NOW","https://www.washingtonexaminer.com/policy/technology/4725070/ai-giants-amodei-essay"]},
+{id:"f2026091317131",ts:"2026-09-13 17:13",type:"voice",key:"theft",title:"环球时报快评《瞄准中国 AI！美国“科技右翼”端出冷战剧本》（英文版 Global Times 9/13 同刊）：直指阿莫代 9/12 长文表面倡导 AI 行业“反内卷”、实为披着全球 AI 安全外衣的“AI 冷战剧本”，点出其中三大对华遏制措施——严禁向中国出售高性能 AI 芯片与半导体制造设备、打击所谓模型“蒸馏”、防止大模型核心权重被窃或经黑客外泄；文章称其真实目的是以技术壁垒与规则垄断护持华盛顿在前沿科技的垄断霸权、将中国排除在全球 AI 治理体系之外，与“硅和平”（Pax Silica）倡议一脉相承；指中国是全球 AI 生态中体量最大、开放程度最高的供给方之一，强行割裂产业链只会抬高全球试错成本",src:["环球时报（英文版 Global Times）","https://www.globaltimes.cn/page/202609/1370436.shtml"]},
+{id:"f2026091311001",ts:"2026-09-13 11:00",type:"voice",key:"rasa",title:"南华早报 9/12-9/13：美中正磋商把原定独立的政府间 AI 对话并入财长贝森特与副总理何立峰主导的更高层级经贸会议、在 9/24“习特会”前后一并讨论；双方或议贸易委员会、投资委员会与人工智能工作小组，目前仅贸易委员会有望在峰会前取得具体成果，AI 对话因议题广泛、立场分歧而成果预期有限。报道指若单设 AI 对话，焦点可能从“降低风险”转向半导体管制、模型访问与出口管制等争议；中方不满美方推动方式，认为其意在限制中国自身 AI 能力；讨论范围含半导体管制、模型蒸馏与知识产权、安全规范、网络安全及军事限制。另：中国驻美使馆发言人刘畅（Liu Chang）回应贝森特“蒸馏”言论，称其为“对中国 AI 产业发展与进步的蓄意攻击”，敦促美方停止对华科技遏制（The Star / SCMP 9/13）",src:["南华早报 / The Star","https://www.thestar.com.my/aseanplus/aseanplus-news/2026/09/13/china-can-never-get-ahead-of-us-in-ai-bessent-says-in-advance-of-xis-visit"]}
+
 ]};
 
 
@@ -573,7 +703,9 @@ const PRED={
  papa:{when:"本届成法概率低（&lt;20%）：司法委员会未排听证且 TRIPS 冲突明显；更可能随届死亡，2027 重提",conf:"low",
    basis:"2023 版 H.R.5475 在委员会即亡是直接先例；穆勒纳尔/伊萨背书提升的是议程地位而非成法率；历史类比：涉专利主权/国民待遇的立法鲜有快速通过记录，若落地更多靠 USPTO 行政规则“曲线变现”。"},
  fapd:{when:"本届几乎不可能（0 联署、无听证）；若下届与 PAPA 捆绑重推，窗口在 2027-2028",conf:"low",
-   basis:"0 联署+外部模型估通过率约 10.8%；作为 PAPA 的“影子/取证前置”法案通常不单独成法，只随主案推进。"}
+   basis:"0 联署+外部模型估通过率约 10.8%；作为 PAPA 的“影子/取证前置”法案通常不单独成法，只随主案推进。"},
+ ruiran:{when:"预计 2026 年 9 月下旬签署成法（概率高）；但成法≠加税——100% 关税需总统另行决定，首轮落点更可能是印度而非中国",conf:"high",
+   basis:"两院高票（参院 86-11、众院 262-159）+白宫本人推动（应特朗普要求扩伊朗条款）；历史类比：制裁法案送签后通常数日至数周内签署。行政裁量层面：美方已对印度加征 25%+25% 次级关税，对华方向则受 9/24 中美峰会与经贸磋商牵制。"}
 };
 function confTag(c){return {high:'高',mid:'中',low:'低'}[c]||c;}
 function predHTML(key){
@@ -627,6 +759,8 @@ function ovCard(b){
 }
 function renderOverview(){
   document.getElementById("bill-list").innerHTML = DATA.bills.map(ovCard).join("");
+  var ext=document.getElementById("ext-list");
+  if(ext) ext.innerHTML=(DATA.ext||[]).map(ovCard).join("");
 }
 
 /* ---------- 媒体视图 ---------- */
@@ -646,7 +780,7 @@ function nBlock(o){
   </div>`;
 }
 function renderNews(){
-  document.getElementById("news-list").innerHTML = nBlock(DATA.ndaa) + DATA.bills.map(nBlock).join("");
+  document.getElementById("news-list").innerHTML = nBlock(DATA.ndaa) + DATA.bills.concat(DATA.ext||[]).map(nBlock).join("");
 }
 
 /* ---------- 交互 ---------- */
