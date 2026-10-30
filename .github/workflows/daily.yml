@@ -48,7 +48,11 @@ jobs:
             echo "无改动，跳过提交"
           else
             git commit -m "chore: daily legislation update $(TZ=Asia/Shanghai date +%F)"
-            git push
+            # 若期间有其它提交，rebase 后再推，避免非快进冲突
+            for i in 1 2 3; do
+              git push && break
+              echo "push 失败，第 $i 次重试…"; git pull --rebase origin main; sleep 5
+            done
           fi
 
       - name: Summary
