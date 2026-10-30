@@ -1,0 +1,106 @@
+name: Daily legislation tracker update
+
+on:
+  schedule:
+    # 每天 22:00 UTC = 北京时间次日 06:00
+    - cron: "0 22 * * *"
+  workflow_dispatch: {}   # 支持手动触发
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run updater
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python scripts/update.py
+
+      - name: Validate HTML & JS
+        run: |
+          python - <<'PY'
+          import re, sys
+          from html.parser import HTMLParser
+          h = open("index.html", encoding="utf-8").read()
+
+          class P(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.stack=[]; self.errs=[]
+                  self.void={'meta','br','img','hr','input','link','source'}
+              def handle_starttag(self,t,a):
+                  if t not in self.void: self.stack.append(t)
+              def handle_endtag(self,t):
+                  if t in self.void: return
+                  if self.stack and self.stack[-1]==t: self.stack.pop()
+                  else: self.errs.append(t)
+          p=P(); p.feed(h)
+          assert not p.errs and not p.stack, "HTML 标签不闭合: %s %s" % (p.errs[:3], p.stack[:3])
+
+          # 界面铁律
+          assert h.count("<b>信源") == 0, "不得出现信源块"
+          assert 'class="refs"' not in h, "refs 不得渲染"
+          m = re.search(r'<div class="meta-line">(.*?)</div>', h, re.S)
+          assert m and "信源" not in m.group(1) and "跟踪：" not in m.group(1), "页眉不得含信源清单"
+
+          # 数据完整性
+          import json
+          def lit(name):
+              mm = re.search(r"const\s+%s\s*=\s*\{" % name, h)
+              s = mm.end()-1; depth=0; i=s; ins=False; esc=False
+              while i < len(h):
+                  c=h[i]
+                  if ins:
+                      if esc: esc=False
+                      elif c=="\\": esc=True
+                      elif c=='"': ins=False
+                  else:
+                      if c=='"': ins=True
+                      elif c=='{': depth+=1
+                      elif c=='}':
+                          depth-=1
+                          if depth==0: return json.loads(h[s:i+1])
+                  i+=1
+          d = lit("DATA"); t = lit("TRACKER")
+          assert len(d["bills"]) == 9, "bills 应为 9"
+          assert len(d.get("ext", [])) == 1, "ext 应为 1"
+          assert len(t["feed"]) <= 20, "feed 不得超过 20"
+          ts=[x["ts"] for x in t["feed"]]
+          assert ts == sorted(ts, reverse=True), "feed 须按时间倒序"
+          print("✅ 校验通过：bills=%d ext=%d feed=%d" % (len(d["bills"]), len(d.get("ext",[])), len(t["feed"])))
+          PY
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "无改动，跳过提交"
+          else
+            git commit -m "chore: daily legislation update $(TZ=Asia/Shanghai date +%F)"
+            git push
+          fi
+
+      - name: Summary
+        run: |
+          if [ -f scripts/run_summary.txt ]; then cat scripts/run_summary.txt >> $GITHUB_STEP_SUMMARY; fi
